@@ -1,0 +1,10 @@
+name: EnchantGUI
+version: 1.0
+main: dk.dennist.enchantgui.Main
+
+author: Dentych
+
+commands:
+    eshop:
+        description: Command for the EnchantGUI plugin
+        usage: Simply just /eshop

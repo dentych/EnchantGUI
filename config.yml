@@ -1,0 +1,58 @@
+# Do not touch this, if you are not asked to
+# If you get an error about your config not being up-to-date, then
+# go to the EnchantGUI bukkit page for instructions.
+version: 1.1
+
+# If set to true, the enchant icons will be shown as the item they can enchant.
+# If set to false, the enchant icons will all be enchanted books.
+show-enchants-as-items: true
+
+# Enchant data
+arrow-damage:
+    price: 100
+arrow-fire:
+    price: 200
+arrow-infinite:
+    price: 300
+arrow-knockback:
+    price: 200
+damage-all:
+    price: 200
+damage-arthropods:
+    price: 200
+damage-undead:
+    price: 200
+dig-speed:
+    price: 200
+durability:
+    price: 200
+fire-aspect:
+    price: 200
+knockback:
+    price: 200
+loot-bonus-blocks:
+    price: 200
+loot-bonus-mobs:
+    price: 200
+luck:
+    price: 200
+lure:
+    price: 200
+oxygen:
+    price: 200
+protection-environmental:
+    price: 200
+protection-explosions:
+    price: 200
+protection-fall:
+    price: 200
+protection-fire:
+    price: 200
+protection-projectile:
+    price: 200
+silk-touch:
+    price: 200
+thorns:
+    price: 200
+water-worker:
+    price: 200
