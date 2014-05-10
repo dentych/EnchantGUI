@@ -1,0 +1,4 @@
+EnchantGUI
+==========
+
+EnchantGUI for Bukkit
