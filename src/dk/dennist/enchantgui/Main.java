@@ -3,7 +3,6 @@ package dk.dennist.enchantgui;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -27,7 +26,7 @@ public class Main extends JavaPlugin {
         gm = new GUIManager(this, this);
         getServer().getPluginManager().registerEvents(new GUIListener(this, this), this);
 
-        if (!setupEconomy() ) {
+        if (!setupEconomy()) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
@@ -54,12 +53,11 @@ public class Main extends JavaPlugin {
 
     public boolean takeMoneyFromPlayer(Player p, String path) {
         double price = getConfig().getDouble(path + ".price");
-        EconomyResponse r =  econ.withdrawPlayer(p.getName(),price);
+        EconomyResponse r = econ.withdrawPlayer(getServer().getOfflinePlayer(p.getUniqueId()), price);
 
         if (r.transactionSuccess()) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -67,8 +65,10 @@ public class Main extends JavaPlugin {
     public String getPermissionName(Enchantment ent) {
         String base = "eshop.enchant.";
         String[] split = ent.getName().toLowerCase().split("_");
-        if (split.length > 1) {
+        if (split.length == 2) {
             return base + split[0] + "-" + split[1];
+        } else if (split.length == 3) {
+            return base + split[0] + "-" + split[1] + "-" + split[2];
         } else {
             return base + split[0];
         }
@@ -76,11 +76,18 @@ public class Main extends JavaPlugin {
 
     public String getDisplayName(Enchantment ent) {
         String[] split = ent.getName().toLowerCase().split("_");
-        String first, second, name;
-        if (split.length > 1) {
+        String first, second, third, name;
+        if (split.length == 2) {
             first = split[0].substring(0, 1).toUpperCase() + split[0].substring(1);
             second = split[1].substring(0, 1).toUpperCase() + split[1].substring(1);
             name = first + " " + second;
+
+            return name;
+        } else if (split.length == 3) {
+            first = split[0].substring(0, 1).toUpperCase() + split[0].substring(1);
+            second = split[1].substring(0, 1).toUpperCase() + split[1].substring(1);
+            third = split[2].substring(0, 1).toUpperCase() + split[2].substring(1);
+            name = first + " " + second + " " + third;
 
             return name;
         } else {
@@ -92,8 +99,10 @@ public class Main extends JavaPlugin {
 
     public String getConfigName(Enchantment ent) {
         String[] split = ent.getName().toLowerCase().split("_");
-        if (split.length > 1) {
+        if (split.length == 2) {
             return split[0] + "-" + split[1];
+        } else if (split.length == 3) {
+            return split[0] + "-" + split[1] + "-" + split[2];
         } else {
             return split[0];
         }
@@ -107,24 +116,19 @@ public class Main extends JavaPlugin {
                     if (sender.hasPermission("eshop.use")) {
                         Player p = (Player) sender;
                         gm.openEnchantShop(p);
-                    }
-                    else {
+                    } else {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to use EnchantGUI");
                     }
-                }
-                else
-                {
+                } else {
                     sender.sendMessage(ChatColor.RED + "Sorry, this command can only be used by in-game players.");
                 }
-            }
-            else {
+            } else {
                 if (args[0].equalsIgnoreCase("reload")) {
                     if (sender.isOp() || sender.hasPermission("eshop.reload")) {
                         sender.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Reloading " + ChatColor.GREEN + "EnchantGUI" + ChatColor.WHITE + "!");
                         this.saveDefaultConfig();
                         this.reloadConfig();
-                    }
-                    else {
+                    } else {
                         sender.sendMessage(ChatColor.RED + "Access denied!");
                     }
                 }
