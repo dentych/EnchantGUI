@@ -34,7 +34,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.ARROW_DAMAGE;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -51,7 +51,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.ARROW_FIRE;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -68,7 +68,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.ARROW_INFINITE;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -85,7 +85,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.ARROW_KNOCKBACK;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -102,7 +102,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.DAMAGE_ALL;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -119,7 +119,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.DAMAGE_ARTHROPODS;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -136,7 +136,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.DAMAGE_UNDEAD;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -153,7 +153,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.DIG_SPEED;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -170,7 +170,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.DURABILITY;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -187,7 +187,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.FIRE_ASPECT;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -204,7 +204,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.KNOCKBACK;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -221,7 +221,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.LOOT_BONUS_BLOCKS;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -238,7 +238,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.LOOT_BONUS_MOBS;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -255,7 +255,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.LUCK;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -272,7 +272,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.LURE;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -289,7 +289,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.OXYGEN;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -306,7 +306,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.PROTECTION_ENVIRONMENTAL;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -323,7 +323,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.PROTECTION_EXPLOSIONS;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -340,7 +340,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.PROTECTION_FALL;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -357,7 +357,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.PROTECTION_FIRE;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -374,7 +374,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.PROTECTION_PROJECTILE;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + "Projectile Protection"
                             + ChatColor.WHITE);
@@ -392,7 +392,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.SILK_TOUCH;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -409,7 +409,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.THORNS;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }
@@ -426,7 +426,7 @@ public class GUIListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     ent = Enchantment.WATER_WORKER;
                     if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                        if (main.takeMoneyFromPlayer(p, ent.getName().toLowerCase())) {
+                        if (main.takeMoneyFromPlayer(p, ent)) {
                             item.addEnchantment(ent, ent.getMaxLevel());
                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                         }

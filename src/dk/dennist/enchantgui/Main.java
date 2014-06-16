@@ -51,7 +51,8 @@ public class Main extends JavaPlugin {
         return econ != null;
     }
 
-    public boolean takeMoneyFromPlayer(Player p, String path) {
+    public boolean takeMoneyFromPlayer(Player p, Enchantment ent) {
+        String path = getConfigName(ent);
         double price = getConfig().getDouble(path + ".price");
         EconomyResponse r = econ.withdrawPlayer(getServer().getOfflinePlayer(p.getUniqueId()), price);
 
