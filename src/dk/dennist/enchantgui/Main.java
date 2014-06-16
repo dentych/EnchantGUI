@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,15 +17,21 @@ import java.util.logging.Logger;
  * Created by Dennis on 03/05/2014.
  */
 public class Main extends JavaPlugin {
+    public static String version;
     GUIManager gm;
     private static final Logger log = Logger.getLogger("Minecraft");
     public static Economy econ = null;
 
     @Override
     public void onEnable() {
+        PluginDescriptionFile pdf = this.getDescription();
+        version = pdf.getVersion();
+
         this.saveDefaultConfig();
         gm = new GUIManager(this, this);
         getServer().getPluginManager().registerEvents(new GUIListener(this, this), this);
+        if (getConfig().getBoolean("enable-news"))
+            getServer().getPluginManager().registerEvents(new NewsListener(this, this), this);
 
         if (!setupEconomy()) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
