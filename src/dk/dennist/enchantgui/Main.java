@@ -117,6 +117,14 @@ public class Main extends JavaPlugin {
         }
     }
 
+    public String getEnchantPrice(Enchantment ent, int level) {
+        String configName = getConfigName(ent);
+        if (getConfig().contains(configName+".all"))
+            return getConfig().getString(configName+".all");
+        else
+            return getConfig().getString(configName+".level"+(level+1));
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("eshop")) {

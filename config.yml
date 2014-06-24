@@ -10,52 +10,142 @@ enable-news: true
 # If set to false, the enchant icons will all be enchanted books.
 show-enchants-as-items: true
 
-# Enchant data
+# Enchant prices
+# You can set a price for each individual level
+# You can also use all: <price> to set a price for all enchant levels.
 arrow-damage:
-    price: 100
+    all: 500
 arrow-fire:
-    price: 200
+    all: 400
 arrow-infinite:
-    price: 300
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 arrow-knockback:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 damage-all:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 damage-arthropods:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 damage-undead:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 dig-speed:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 durability:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 fire-aspect:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 knockback:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 loot-bonus-blocks:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 loot-bonus-mobs:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 luck:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 lure:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 oxygen:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 protection-environmental:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 protection-explosions:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 protection-fall:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 protection-fire:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 protection-projectile:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 silk-touch:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 thorns:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
 water-worker:
-    price: 200
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+    level5: 500
