@@ -3,9 +3,6 @@
 # go to the EnchantGUI bukkit page for instructions.
 version: 1.2
 
-# Enable news from the developer. The news are fetched from my website.
-enable-news: true
-
 # If set to true, the enchant icons will be shown as the item they can enchant.
 # If set to false, the enchant icons will all be enchanted books.
 show-enchants-as-items: true
