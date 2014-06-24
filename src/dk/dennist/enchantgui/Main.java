@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * Created by Dennis on 03/05/2014.
  */
-public class Main extends JavaPlugin {
+public class Main extends JavaPluginz { // TEST
     public static String version;
     GUIManager gm;
     private static final Logger log = Logger.getLogger("Minecraft");
