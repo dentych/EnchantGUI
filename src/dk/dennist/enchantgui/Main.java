@@ -29,7 +29,7 @@ public class Main extends JavaPlugin {
         gm = new GUIManager(this, this);
         getServer().getPluginManager().registerEvents(new GUIListener(this, this), this);
         if (getConfig().getBoolean("enable-news"))
-            getServer().getPluginManager().registerEvents(new NewsListener(this, this), this);
+            //getServer().getPluginManager().registerEvents(new NewsListener(this, this), this);
 
         if (!setupEconomy()) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
