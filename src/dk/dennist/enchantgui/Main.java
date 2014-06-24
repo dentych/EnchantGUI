@@ -39,10 +39,10 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        if (getConfig().getDouble("version") < 1.1) {
-            getLogger().severe("WARNING: Your config version is not up to date!");
-            getLogger().severe("WARNING: Your config version is not up to date!");
-            getLogger().severe("WARNING: Your config version is not up to date!");
+        if (getConfig().getDouble("version") < 1.2) {
+            getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
+            getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
+            getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
             this.getPluginLoader().disablePlugin(this);
         }
     }
