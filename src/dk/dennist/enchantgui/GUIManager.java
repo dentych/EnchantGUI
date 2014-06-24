@@ -31,11 +31,43 @@ public class GUIManager {
     }
 
     public void openEnchantShop(Player p) {
+        if (!main.menuPage.containsKey(p.getName()))
+            main.menuPage.put(p.getName(), 0);
+
         Server s = p.getServer();
 
-        Inventory inv = s.createInventory(p, 27, "Enchant GUI");
+        Inventory inv = s.createInventory(p, 36, "Enchant GUI");
         ItemStack[] menuItems = this.generateMenu(p);
         inv.setContents(menuItems);
+        ItemStack item;
+        ItemMeta im;
+        switch (main.menuPage.get(p.getName())) {
+            case 0:
+                item = new ItemStack(Material.EMERALD);
+                im = item.getItemMeta();
+                im.setDisplayName("Next page");
+                item.setItemMeta(im);
+                inv.setItem(35, item);
+                break;
+            case 4:
+                item = new ItemStack(Material.EMERALD);
+                im = item.getItemMeta();
+                im.setDisplayName("Previous page");
+                item.setItemMeta(im);
+                inv.setItem(27, item);
+                break;
+            default:
+                item = new ItemStack(Material.EMERALD);
+                im = item.getItemMeta();
+                im.setDisplayName("Previous page");
+                item.setItemMeta(im);
+                inv.setItem(27, item);
+                item = new ItemStack(Material.EMERALD);
+                im = item.getItemMeta();
+                im.setDisplayName("Next page");
+                item.setItemMeta(im);
+                inv.setItem(35, item);
+        }
         p.openInventory(inv);
     }
 
@@ -44,7 +76,9 @@ public class GUIManager {
         int count = 0;
 
         for (Enchantment ent : entList) {
-            p.sendMessage(ent.getName());
+            if (ent.getMaxLevel() <= main.menuPage.get(p.getName()))
+                continue;
+
             if (p.hasPermission(main.getPermissionName(ent)) || p.hasPermission("eshop.enchant.all")) {
                 if (plugin.getConfig().getBoolean("show-enchants-as-items"))
                     menuItems[count] = itemForEnchant(ent);
@@ -54,7 +88,7 @@ public class GUIManager {
                 ItemMeta im = menuItems[count].getItemMeta();
                 im.setDisplayName(main.getDisplayName(ent));
                 String price = plugin.getConfig().getString(main.getConfigName(ent) + ".price");
-                im.setLore(Arrays.asList(ChatColor.GREEN + "$" + price));
+                im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + "$" + price));
                 menuItems[count].setItemMeta(im);
                 count++;
             }

@@ -11,6 +11,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -19,6 +21,7 @@ public class Main extends JavaPlugin {
     GUIManager gm;
     private static final Logger log = Logger.getLogger("Minecraft");
     public static Economy econ = null;
+    public Map<String, Integer> menuPage = new HashMap<String, Integer>();
 
     @Override
     public void onEnable() {

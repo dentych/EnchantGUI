@@ -30,20 +30,35 @@ public class GUIListener implements Listener {
 
             // Arrow Damage
             if (e.getWhoClicked() instanceof Player && e.getCurrentItem().hasItemMeta()) {
-                for (Enchantment ent : Enchantment.values()) {
-                    if (main.getDisplayName(ent).equalsIgnoreCase(e.getCurrentItem().getItemMeta().getDisplayName())) {
-                        Player p = (Player) e.getWhoClicked();
-                        if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
-                            if (main.takeMoneyFromPlayer(p, ent)) {
-                                item.addEnchantment(ent, ent.getMaxLevel());
-                                p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
+                if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("next page")) {
+                    int newPage = main.menuPage.get(e.getWhoClicked().getName()) + 1;
+                    main.menuPage.put(e.getWhoClicked().getName(), newPage);
+                    main.gm.openEnchantShop((Player) e.getWhoClicked());
+                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("previous page")) {
+                    int newPage = main.menuPage.get(e.getWhoClicked().getName()) - 1;
+                    main.menuPage.put(e.getWhoClicked().getName(), newPage);
+                    main.gm.openEnchantShop((Player) e.getWhoClicked());
+                } else {
+                    for (Enchantment ent : Enchantment.values()) {
+                        if (main.getDisplayName(ent).equalsIgnoreCase(e.getCurrentItem().getItemMeta().getDisplayName())) {
+                            Player p = (Player) e.getWhoClicked();
+                            if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
+                                if (ent.getMaxLevel() > main.menuPage.get(p.getName())) {
+                                    if (main.takeMoneyFromPlayer(p, ent)) {
+                                        item.addEnchantment(ent, (ent.getStartLevel()+main.menuPage.get(p.getName())));
+                                        item.addEnchantment(ent, (ent.getStartLevel()+main.menuPage.get(p.getName())));
+                                        p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
+                                    } else {
+                                        p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough money!");
+                                    }
+                                } else {
+                                    p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "This enchant does not have such a high level!");
+                                }
                             } else {
-                                p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough money!");
+                                p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "This enchant can't be put on that item!");
                             }
-                        } else {
-                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "This enchant can't be put on that item!");
+                            break;
                         }
-                        break;
                     }
                 }
             }
