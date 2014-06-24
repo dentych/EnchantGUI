@@ -28,7 +28,7 @@ public class GUIListener implements Listener {
             e.setCancelled(true);
             ItemStack item = e.getWhoClicked().getItemInHand();
 
-                    // Arrow Damage
+            // Arrow Damage
             if (e.getWhoClicked() instanceof Player && e.getCurrentItem().hasItemMeta()) {
                 for (Enchantment ent : Enchantment.values()) {
                     if (main.getDisplayName(ent).equalsIgnoreCase(e.getCurrentItem().getItemMeta().getDisplayName())) {
@@ -47,8 +47,7 @@ public class GUIListener implements Listener {
                     }
                 }
             }
-        }
-        else if (e.getSlotType() == InventoryType.SlotType.QUICKBAR && e.getInventory().getName().equalsIgnoreCase("enchant gui")) {
+        } else if (e.getSlotType() == InventoryType.SlotType.QUICKBAR && e.getInventory().getName().equalsIgnoreCase("enchant gui")) {
             e.setCancelled(true);
         }
     }
