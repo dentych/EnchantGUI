@@ -33,7 +33,7 @@ public class GUIManager {
         p.openInventory(inv);
     }
 
-    public ItemStack[] generateMenu(Player p) {
+    private ItemStack[] generateMenu(Player p) {
         ItemStack[] menuItems = new ItemStack[24];
         int count = 0;
 
