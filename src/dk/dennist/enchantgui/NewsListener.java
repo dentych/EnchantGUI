@@ -2,11 +2,8 @@ package dk.dennist.enchantgui;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -44,17 +41,14 @@ public class NewsListener implements Listener {
                         while ((input = br.readLine()) != null) {
                             if (input.toLowerCase().equals("none")) {
                                 break;
-                            }
-                            else {
+                            } else {
                                 event.getPlayer().sendMessage(ChatColor.AQUA + "[EnchantGUI News] " + ChatColor.GRAY + input);
                             }
                         }
                         br.close();
-                    }
-                    catch (MalformedURLException e) {
+                    } catch (MalformedURLException e) {
                         event.getPlayer().getServer().getLogger().severe("Couldn't connect to news website. Received MalformedURLException: " + e.getMessage());
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         event.getPlayer().getServer().getLogger().severe("Couldn't connect to news website. Received I/O Exception: " + e.getMessage());
                     }
                 }
