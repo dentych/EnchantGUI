@@ -31,8 +31,6 @@ public class Main extends JavaPlugin {
         this.saveDefaultConfig();
         gm = new GUIManager(this, this);
         getServer().getPluginManager().registerEvents(new GUIListener(this, this), this);
-        if (getConfig().getBoolean("enable-news"))
-            //getServer().getPluginManager().registerEvents(new NewsListener(this, this), this);
 
         if (!setupEconomy()) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -62,7 +60,7 @@ public class Main extends JavaPlugin {
     public boolean takeMoneyFromPlayer(Player p, Enchantment ent) {
         String path = getConfigName(ent);
         double price = getConfig().getDouble(path + ".price");
-        EconomyResponse r = econ.withdrawPlayer(getServer().getOfflinePlayer(p.getUniqueId()), price);
+        EconomyResponse r = econ.withdrawPlayer(p.getName(), price);
 
         if (r.transactionSuccess()) {
             return true;
