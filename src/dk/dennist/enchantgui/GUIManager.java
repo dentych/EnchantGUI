@@ -87,26 +87,26 @@ public class GUIManager {
             case 0:
                 item = new ItemStack(Material.EMERALD);
                 im = item.getItemMeta();
-                im.setDisplayName("Next page");
+                im.setDisplayName("Next level");
                 item.setItemMeta(im);
                 inv.setItem(35, item);
                 break;
             case 4:
                 item = new ItemStack(Material.EMERALD);
                 im = item.getItemMeta();
-                im.setDisplayName("Previous page");
+                im.setDisplayName("Previous level");
                 item.setItemMeta(im);
                 inv.setItem(27, item);
                 break;
             default:
                 item = new ItemStack(Material.EMERALD);
                 im = item.getItemMeta();
-                im.setDisplayName("Previous page");
+                im.setDisplayName("Previous level");
                 item.setItemMeta(im);
                 inv.setItem(27, item);
                 item = new ItemStack(Material.EMERALD);
                 im = item.getItemMeta();
-                im.setDisplayName("Next page");
+                im.setDisplayName("Next level");
                 item.setItemMeta(im);
                 inv.setItem(35, item);
         }
@@ -114,7 +114,7 @@ public class GUIManager {
 
         for (int i = 1; i <= 5; i++) {
             im = item.getItemMeta();
-            im.setDisplayName("Page " + i);
+            im.setDisplayName("Level " + i);
             item.setItemMeta(im);
             inv.setItem((28+i), item);
         }
