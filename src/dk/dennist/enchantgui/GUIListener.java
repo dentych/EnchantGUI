@@ -62,7 +62,7 @@ public class GUIListener implements Listener {
                                             item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
                                             p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
                                         } else {
-                                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough experience points!");
+                                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough experience!");
                                         }
                                     }
                                 } else {

@@ -46,10 +46,7 @@ public class Main extends JavaPlugin {
             this.getPluginLoader().disablePlugin(this);
         }
 
-        if (getConfig().getString("payment-currency").equalsIgnoreCase("money"))
-            currency = 1;
-        else
-            currency = 2;
+        currency = checkEconomy();
     }
 
     private boolean setupEconomy() {
@@ -96,27 +93,36 @@ public class Main extends JavaPlugin {
             price = getConfig().getInt(path + ".level" + String.valueOf(level));
         }
 
-        if (p.getTotalExperience() > price) {
-            int newXP = p.getTotalExperience()-price;
-            p.setExp(0);
-            p.setLevel(0);
-            p.setTotalExperience(0);
+        if (currency == 2) {
+            if (p.getTotalExperience() > price) {
+                int newXP = p.getTotalExperience() - price;
+                p.setExp(0);
+                p.setLevel(0);
+                p.setTotalExperience(0);
 
-            while (newXP > 0) {
-                int expToLevelUp = expCost(p.getLevel());
-                newXP -= expToLevelUp;
-                if (newXP >= 0) {
-                    p.giveExp(expToLevelUp);
+                while (newXP > 0) {
+                    int expToLevelUp = expCost(p.getLevel());
+                    newXP -= expToLevelUp;
+                    if (newXP >= 0) {
+                        p.giveExp(expToLevelUp);
+                    } else {
+                        newXP += expToLevelUp;
+                        p.giveExp(newXP);
+                        newXP = 0;
+                    }
                 }
-                else {
-                    newXP += expToLevelUp;
-                    p.giveExp(newXP);
-                    newXP = 0;
-                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
         } else {
-            return false;
+            // p.sendMessage("FALSE"); // Debugging
+            if (p.getLevel() > price) {
+                p.giveExpLevels((-price));
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -185,6 +191,23 @@ public class Main extends JavaPlugin {
             return getConfig().getString(configName + ".level" + (level + 1));
     }
 
+    public int checkEconomy() {
+        // Currency: 1 = money, 2 = xp points, 3 = xp levels
+        if (getConfig().getString("payment-currency").equalsIgnoreCase("money"))
+            return 1;
+        else {
+            if (getConfig().contains("xp-option")) {
+                if (getConfig().getString("xp-option").equalsIgnoreCase("points")) {
+                    return 2;
+                }
+                else {
+                    return 3;
+                }
+            }
+        }
+        return 1;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("eshop")) {
@@ -205,19 +228,7 @@ public class Main extends JavaPlugin {
                         sender.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Reloading " + ChatColor.GREEN + "EnchantGUI" + ChatColor.WHITE + "!");
                         this.saveDefaultConfig();
                         this.reloadConfig();
-                        if (getConfig().getString("payment-currency").equalsIgnoreCase("money"))
-                            currency = 1;
-                        else
-                            currency = 2;
-                    } else {
-                        sender.sendMessage(ChatColor.RED + "Access denied!");
-                    }
-                } else if (args[0].equalsIgnoreCase("lvltake")) {
-                    if (sender.isOp()) {
-                        if (sender instanceof Player) {
-                            Player p = (Player) sender;
-                            p.giveExpLevels(-1);
-                        }
+                        currency = checkEconomy();
                     } else {
                         sender.sendMessage(ChatColor.RED + "Access denied!");
                     }

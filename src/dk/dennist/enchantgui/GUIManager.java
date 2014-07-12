@@ -43,6 +43,9 @@ public class GUIManager {
         ItemMeta im;
         generateNavigation(inv, main.menuPage.get(p.getName()));
         p.openInventory(inv);
+
+        // For debugging purposes
+        // p.sendMessage("Exp: " + p.getTotalExperience() + ". getExp: " + p.getExp() + ". Levels: " + p.getLevel());
     }
 
     private ItemStack[] generateMenu(Player p) {
@@ -64,8 +67,10 @@ public class GUIManager {
                 String price = main.getEnchantPrice(ent, main.menuPage.get(p.getName()));
                 if (main.currency == 1)
                     im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + "$" + price));
-                else
+                else if (main.currency == 2)
                     im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + price + " XP"));
+                else
+                    im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + price + " Levels"));
                 menuItems[count].setItemMeta(im);
                 count++;
             }
