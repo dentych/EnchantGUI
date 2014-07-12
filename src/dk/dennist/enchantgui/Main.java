@@ -22,6 +22,8 @@ public class Main extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     public static Economy econ = null;
     public Map<String, Integer> menuPage = new HashMap<String, Integer>();
+    // Currency 1 = money, 2 = XP
+    public int currency = 1;
 
     @Override
     public void onEnable() {
@@ -37,12 +39,17 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        if (getConfig().getDouble("version") < 1.2) {
+        if (getConfig().getDouble("version") < 1.3) {
             getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
             getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
             getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
             this.getPluginLoader().disablePlugin(this);
         }
+
+        if (getConfig().getString("payment-currency").equalsIgnoreCase("money"))
+            currency = 1;
+        else
+            currency = 2;
     }
 
     private boolean setupEconomy() {
@@ -57,15 +64,70 @@ public class Main extends JavaPlugin {
         return econ != null;
     }
 
-    public boolean takeMoneyFromPlayer(Player p, Enchantment ent) {
+    public boolean takeMoneyFromPlayer(Player p, Enchantment ent, int level) {
+        double price;
+        EconomyResponse r;
         String path = getConfigName(ent);
-        double price = getConfig().getDouble(path + ".price");
-        EconomyResponse r = econ.withdrawPlayer(p.getName(), price);
+        level += 1;
+
+        if (getConfig().contains(path + ".all")) {
+            price = getConfig().getDouble(path + ".all");
+            r = econ.withdrawPlayer(getServer().getOfflinePlayer(p.getUniqueId()), price);
+        } else {
+            price = getConfig().getDouble(path + ".level" + String.valueOf(level));
+            r = econ.withdrawPlayer(getServer().getOfflinePlayer(p.getUniqueId()), price);
+        }
 
         if (r.transactionSuccess()) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public boolean takeExpFromPlayer(Player p, Enchantment ent, int level) {
+        String path = getConfigName(ent);
+        int price;
+        level += 1;
+
+        if (getConfig().contains(path + ".all")) {
+            price = getConfig().getInt(path + ".all");
+        } else {
+            price = getConfig().getInt(path + ".level" + String.valueOf(level));
+        }
+
+        if (p.getTotalExperience() > price) {
+            int newXP = p.getTotalExperience()-price;
+            p.setExp(0);
+            p.setLevel(0);
+            p.setTotalExperience(0);
+
+            while (newXP > 0) {
+                int expToLevelUp = expCost(p.getLevel());
+                newXP -= expToLevelUp;
+                if (newXP >= 0) {
+                    p.giveExp(expToLevelUp);
+                }
+                else {
+                    newXP += expToLevelUp;
+                    p.giveExp(newXP);
+                    newXP = 0;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // The expCost method has been found on the MinecraftWiki on Experience.
+    private int expCost(int currentLevel) {
+        if (currentLevel >= 30) {
+            return 62 + (currentLevel - 30) * 7;
+        } else if (currentLevel >= 15) {
+            return 17 + (currentLevel - 15) * 3;
+        } else {
+            return 17;
         }
     }
 
@@ -117,10 +179,10 @@ public class Main extends JavaPlugin {
 
     public String getEnchantPrice(Enchantment ent, int level) {
         String configName = getConfigName(ent);
-        if (getConfig().contains(configName+".all"))
-            return getConfig().getString(configName+".all");
+        if (getConfig().contains(configName + ".all"))
+            return getConfig().getString(configName + ".all");
         else
-            return getConfig().getString(configName+".level"+(level+1));
+            return getConfig().getString(configName + ".level" + (level + 1));
     }
 
     @Override
@@ -143,6 +205,19 @@ public class Main extends JavaPlugin {
                         sender.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Reloading " + ChatColor.GREEN + "EnchantGUI" + ChatColor.WHITE + "!");
                         this.saveDefaultConfig();
                         this.reloadConfig();
+                        if (getConfig().getString("payment-currency").equalsIgnoreCase("money"))
+                            currency = 1;
+                        else
+                            currency = 2;
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "Access denied!");
+                    }
+                } else if (args[0].equalsIgnoreCase("lvltake")) {
+                    if (sender.isOp()) {
+                        if (sender instanceof Player) {
+                            Player p = (Player) sender;
+                            p.giveExpLevels(-1);
+                        }
                     } else {
                         sender.sendMessage(ChatColor.RED + "Access denied!");
                     }

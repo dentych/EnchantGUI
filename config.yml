@@ -1,11 +1,15 @@
 # Do not touch this, if you are not asked to
 # If you get an error about your config not being up-to-date, then
 # go to the EnchantGUI bukkit page for instructions.
-version: 1.2
+version: 1.3
 
 # If set to true, the enchant icons will be shown as the item they can enchant.
 # If set to false, the enchant icons will all be enchanted books.
 show-enchants-as-items: true
+
+# Payment currency can be one of two. Either 'money' for regular money (using Vault+Economy system)
+# or 'xp' for experience points.
+payment-currency: money
 
 # Enchant prices
 # You can set a price for each individual level

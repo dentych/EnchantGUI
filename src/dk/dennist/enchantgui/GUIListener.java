@@ -48,12 +48,22 @@ public class GUIListener implements Listener {
                             Player p = (Player) e.getWhoClicked();
                             if (item.getType().getMaxDurability() > 25 && ent.canEnchantItem(item) && !item.containsEnchantment(ent)) {
                                 if (ent.getMaxLevel() > main.menuPage.get(p.getName())) {
-                                    if (main.takeMoneyFromPlayer(p, ent)) {
-                                        item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
-                                        item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
-                                        p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
+                                    if (main.currency == 1) {
+                                        if (main.takeMoneyFromPlayer(p, ent, main.menuPage.get(p.getName()))) {
+                                            item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
+                                            item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
+                                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
+                                        } else {
+                                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough money!");
+                                        }
                                     } else {
-                                        p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough money!");
+                                        if (main.takeExpFromPlayer(p, ent, main.menuPage.get(p.getName()))) {
+                                            item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
+                                            item.addEnchantment(ent, (ent.getStartLevel() + main.menuPage.get(p.getName())));
+                                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Your item has been enchanted with " + ChatColor.GREEN + main.getDisplayName(ent));
+                                        } else {
+                                            p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "You don't have enough experience points!");
+                                        }
                                     }
                                 } else {
                                     p.sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "This enchant does not have such a high level!");

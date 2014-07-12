@@ -62,7 +62,10 @@ public class GUIManager {
                 ItemMeta im = menuItems[count].getItemMeta();
                 im.setDisplayName(main.getDisplayName(ent));
                 String price = main.getEnchantPrice(ent, main.menuPage.get(p.getName()));
-                im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + "$" + price));
+                if (main.currency == 1)
+                    im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + "$" + price));
+                else
+                    im.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + (ent.getStartLevel()+main.menuPage.get(p.getName())), ChatColor.GREEN + price + " XP"));
                 menuItems[count].setItemMeta(im);
                 count++;
             }
