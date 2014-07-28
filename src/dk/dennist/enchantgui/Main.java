@@ -185,7 +185,7 @@ public class Main extends JavaPlugin {
 
     public String getEnchantPrice(Enchantment ent, int level) {
         String configName = getConfigName(ent);
-        if (getConfig().contains(configName + ".all"))
+        if (getConfig().isSet(configName + ".all"))
             return getConfig().getString(configName + ".all");
         else
             return getConfig().getString(configName + ".level" + (level + 1));
