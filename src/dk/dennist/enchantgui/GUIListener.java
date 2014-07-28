@@ -31,15 +31,15 @@ public class GUIListener implements Listener {
             // Arrow Damage
             if (e.getWhoClicked() instanceof Player && e.getCurrentItem().hasItemMeta()) {
                 String[] parts = e.getCurrentItem().getItemMeta().getDisplayName().split(" ");
-                if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("next page")) {
+                if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("next level")) {
                     int newPage = main.menuPage.get(e.getWhoClicked().getName()) + 1;
                     main.menuPage.put(e.getWhoClicked().getName(), newPage);
                     main.gm.openEnchantShop((Player) e.getWhoClicked());
-                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("previous page")) {
+                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("previous level")) {
                     int newPage = main.menuPage.get(e.getWhoClicked().getName()) - 1;
                     main.menuPage.put(e.getWhoClicked().getName(), newPage);
                     main.gm.openEnchantShop((Player) e.getWhoClicked());
-                } else if (parts[0].equalsIgnoreCase("page")) {
+                } else if (parts[0].equalsIgnoreCase("level")) {
                     main.menuPage.put(e.getWhoClicked().getName(), (Integer.parseInt(parts[1])-1));
                     main.gm.openEnchantShop((Player) e.getWhoClicked());
                 } else {
