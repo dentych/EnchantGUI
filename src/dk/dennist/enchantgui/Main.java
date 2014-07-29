@@ -42,9 +42,9 @@ public class Main extends JavaPlugin {
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();
-            getServer().getLogger().info("Metrics enabled! :)");
+            getServer().getLogger().info("[EnchantGUI] Metrics started!");
         } catch (IOException e) {
-            getServer().getLogger().severe("Couldn't enable metrics! :(");
+            getServer().getLogger().severe("[EnchantGUI] There was an error while trying to enable metrics! :(");
         }
 
         // Check/setup Vault economy hook
