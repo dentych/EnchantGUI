@@ -11,6 +11,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -27,23 +28,30 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Find version of plugin
         PluginDescriptionFile pdf = this.getDescription();
         version = pdf.getVersion();
 
+        // Make sure to generate default config.yml if one is not present.
         this.saveDefaultConfig();
         gm = new GUIManager(this, this);
+        // Register events
         getServer().getPluginManager().registerEvents(new GUIListener(this, this), this);
 
+        // Enable metrics
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+            getServer().getLogger().info("Metrics enabled! :)");
+        } catch (IOException e) {
+            getServer().getLogger().severe("Couldn't enable metrics! :(");
+        }
+
+        // Check/setup Vault economy hook
         if (!setupEconomy()) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
-        }
-        if (getConfig().getDouble("version") < 1.3) {
-            getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
-            getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
-            getLogger().severe("WARNING: Your config version is not up to date! Go to the BukkitDev page to read about what to do");
-            this.getPluginLoader().disablePlugin(this);
         }
 
         currency = checkEconomy();

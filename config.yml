@@ -1,7 +1,12 @@
 # Do not touch this, if you are not asked to
 # If you get an error about your config not being up-to-date, then
 # go to the EnchantGUI bukkit page for instructions.
-version: 1.3
+version: 1.3.2
+
+# This plugin is gathering some basic info about how many players/servers is using it.
+# All data is collected anonymously and will not harm your server in any way.
+# If you wish to opt-out of this service, though, just change this setting to true.
+opt-out: false
 
 # If set to true, the enchant icons will be shown as the item they can enchant.
 # If set to false, the enchant icons will all be enchanted books.
