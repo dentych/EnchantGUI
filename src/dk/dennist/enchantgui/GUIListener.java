@@ -13,7 +13,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+
 public class GUIListener implements Listener {
+    ArrayList<String> tableClick = new ArrayList<String>();
     JavaPlugin plugin;
     Main main;
 
@@ -84,6 +87,11 @@ public class GUIListener implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR && e.getPlayer().getItemInHand().getType() == Material.ENCHANTMENT_TABLE && e.getPlayer().hasPermission("eshop.table")) {
+            tableClick.add(e.getPlayer().getName());
+            e.getPlayer().sendMessage(ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE + "Okay! Please right click with the tool/weapon/armour you wish to enchant.");
+        }
+        else if (e.getAction() == Action.RIGHT_CLICK_AIR && tableClick.contains(e.getPlayer().getName())) {
+            tableClick.remove(e.getPlayer().getName());
             main.gm.openEnchantShop(e.getPlayer());
         }
     }
