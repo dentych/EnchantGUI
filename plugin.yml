@@ -1,6 +1,6 @@
 name: EnchantGUI
-version: 1.3.2
-main: dk.dennist.enchantgui.Main
+version: 0.1
+main: me.tychsen.enchantgui.Main
 
 author: Dentych
 

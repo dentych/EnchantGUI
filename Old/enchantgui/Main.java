@@ -207,8 +207,7 @@ public class Main extends JavaPlugin {
             if (getConfig().contains("xp-option")) {
                 if (getConfig().getString("xp-option").equalsIgnoreCase("points")) {
                     return 2;
-                }
-                else {
+                } else {
                     return 3;
                 }
             }
