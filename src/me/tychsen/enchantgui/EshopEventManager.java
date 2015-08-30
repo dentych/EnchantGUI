@@ -17,7 +17,6 @@ public class EshopEventManager {
     }
 
     public void handleInventoryClickEvent(InventoryClickEvent e) {
-        // PARTLY IMPLEMENTED...
         boolean correctEvent = e.getInventory().getName().equalsIgnoreCase("enchantgui");
 
         if (correctEvent) {

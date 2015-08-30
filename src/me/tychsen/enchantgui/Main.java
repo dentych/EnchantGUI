@@ -1,7 +1,9 @@
 package me.tychsen.enchantgui;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,6 +18,8 @@ public class Main extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(this, this);
         eshop = new EshopEventManager();
+
+        getLogger().info(Enchantment.DIG_SPEED.getName());
     }
 
     @EventHandler
