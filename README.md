@@ -1,11 +1,7 @@
 EnchantGUI
 ==========
 
-Due to events at Bukkit and handling of said events, this plugin is no longer being continued. It has been a pleasure working on it.
-If you are a developer and wish to continue this project, you are free to pull the source code, as long as you put credits for the original author (me) somewhere in the code. Thanks :)
-
-
-EnchantGUI for Bukkit
+I have begun working on this plugin again. I am rewriting the entire code base, as it was very clunky and un-maintainable before. Hopefully I'll have a working version of this plugin ready quite soon.
 
 BukkitDev site: http://dev.bukkit.org/bukkit-plugins/EnchantGUI
 
