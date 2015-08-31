@@ -18,8 +18,6 @@ public class Main extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(this, this);
         eshop = new EshopEventManager();
-
-        getLogger().info(Enchantment.DIG_SPEED.getName());
     }
 
     @EventHandler

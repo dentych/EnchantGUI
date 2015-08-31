@@ -3,30 +3,31 @@ package me.tychsen.enchantgui;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EshopEnchants {
-    List<EshopItem> enchantList = new ArrayList<>();
+    List<ItemStack> enchantList = new ArrayList<>();
 
     public EshopEnchants() {
         createEnchantList();
     }
 
     public ItemStack[] generateMenuItemsForPlayer(Player p) {
-        List<EshopItem> itemlist = new ArrayList<>();
+        List<ItemStack> itemlist = new ArrayList<>();
 
-        for (EshopItem item : enchantList) {
-            if (p.hasPermission(enchantPermName(item.getEnchant())) || p.isOp()) {
+        for (ItemStack item : enchantList) {
+            if (p.hasPermission("Blabla") || p.isOp()) {
+//                REMEMBER TO FIX PERMISSIONS
                 itemlist.add(item);
             }
         }
 
-        ItemStack[] stack = itemlist.toArray(new ItemStack[itemlist.size()]);
-
-        return stack;
+        return itemlist.toArray(new ItemStack[itemlist.size()]);
     }
 
     /**
@@ -62,7 +63,14 @@ public class EshopEnchants {
     }
 
     private void addItem(Enchantment type, Material mat, String displayName) {
-        enchantList.add(new EshopItem(type, mat, displayName));
+        ItemStack item = new ItemStack(mat);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(displayName);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
+        item.addEnchantment(type, 1);
+        item.setItemMeta(meta);
+
+        enchantList.add(item);
     }
 
     /**
