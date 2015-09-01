@@ -42,17 +42,15 @@ public class EshopEventManager {
 
         if (sender instanceof Player) {
             p = (Player) sender;
-        } else
-            return false;
+        }
 
         if (cmd.getName().equalsIgnoreCase("eshop")) {
             if (playerHasUsePerms(p)) {
                 esys.showMainMenu((Player) sender);
-                return true;
             }
         }
 
-        return false;
+        return true;
     }
 
     /* Private methods */
