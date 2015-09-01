@@ -64,10 +64,10 @@ public class EshopEnchants {
 
     private void addItem(Enchantment type, Material mat, String displayName) {
         ItemStack item = new ItemStack(mat);
+        item.addEnchantment(type, 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(displayName);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
-        item.addEnchantment(type, 1);
         item.setItemMeta(meta);
 
         enchantList.add(item);

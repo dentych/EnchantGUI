@@ -1,30 +1,41 @@
 package me.tychsen.enchantgui;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class EshopEventManager {
     /* Private variables */
-    private EshopSystem esys;
+    private EshopSystem esys = new EshopSystem();
     /* Public variables */
 
     /* Public methods */
-    public EshopEventManager() {
-        esys = new EshopSystem();
-    }
-
     public void handleInventoryClickEvent(InventoryClickEvent e) {
-        boolean correctEvent = e.getInventory().getName().equalsIgnoreCase("enchantgui");
+        boolean correctEvent = e.getInventory().getName().toLowerCase().startsWith("enchantgui");
+        Player p;
 
-        if (correctEvent) {
+        if (correctEvent && e.getWhoClicked() instanceof Player) {
             e.setCancelled(true); // Cancel whatever default action might occur
+            p = (Player) e.getWhoClicked();
+        }
+        else {
+            return;
         }
 
-        // ONLY PARTLY IMPLEMENTED
-        throw new NotImplementedException();
+        switch (esys.getPlayerCurrentPosition(p)) {
+            case 0:
+                esys.showEnchantPage(p, e.getCurrentItem());
+                break;
+            case 1:
+                handleEnchantPage(p, e.getSlot(), e.getCurrentItem());
+                break;
+            default:
+                throw new IndexOutOfBoundsException();
+        }
     }
 
     public boolean handleCommand(CommandSender sender, Command cmd) {
@@ -37,7 +48,7 @@ public class EshopEventManager {
 
         if (cmd.getName().equalsIgnoreCase("eshop")) {
             if (playerHasUsePerms(p)) {
-                esys.openGUI((Player) sender);
+                esys.showMainMenu((Player) sender);
                 return true;
             }
         }
@@ -58,5 +69,18 @@ public class EshopEventManager {
             return true;
         else
             return false;
+    }
+
+    private void handleEnchantPage(Player p, int slot, ItemStack item) {
+        switch (slot) {
+            case 27:
+                esys.showMainMenu(p);
+                break;
+            default:
+                if (item.getType() != Material.AIR) {
+                    esys.purchaseEnchant(p, item);
+                }
+                break;
+        }
     }
 }
