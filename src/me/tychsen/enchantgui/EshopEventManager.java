@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class EshopEventManager {
     /* Private variables */

@@ -13,9 +13,15 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.*;
 
 public class EshopSystem {
-    private Map<String, Integer> playerNavigation = new HashMap<>();
-    private int inventorySize = 36;
-    EshopEnchants enchants = new EshopEnchants();
+    private Map<String, Integer> playerNavigation;
+    private int inventorySize;
+    EshopEnchants enchants;
+
+    public EshopSystem() {
+        playerNavigation = new HashMap<>();
+        inventorySize = 36;
+        enchants = new EshopEnchants();
+    }
 
     public void showMainMenu(Player p) {
         playerNavigation.put(p.getName(), 0);
