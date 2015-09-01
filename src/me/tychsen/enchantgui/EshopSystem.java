@@ -15,19 +15,22 @@ import java.util.*;
 public class EshopSystem {
     private Map<String, Integer> playerNavigation;
     private int inventorySize;
-    EshopEnchants enchants;
+
+    private EshopEnchants enchants;
+    private EshopPermissionSys permsys;
 
     public EshopSystem() {
         playerNavigation = new HashMap<>();
         inventorySize = 36;
         enchants = new EshopEnchants();
+        permsys = new EshopPermissionSys();
     }
 
     public void showMainMenu(Player p) {
         playerNavigation.put(p.getName(), 0);
 
         Inventory inv = p.getServer().createInventory(p, inventorySize, "EnchantGUI");
-        populateInventory(inv, p);
+        generateMainMenu(p, inv);
         p.openInventory(inv);
     }
 
@@ -36,18 +39,12 @@ public class EshopSystem {
 
         Inventory inv = p.getServer().createInventory(p, inventorySize,
                 "EnchantGUI: " + item.getItemMeta().getDisplayName());
-        inv.setContents(createItemlistForEnchant(p, item));
 
-        ItemStack backitem = new ItemStack(Material.EMERALD);
-        ItemMeta meta = backitem.getItemMeta();
-        meta.setDisplayName("Go back");
-        backitem.setItemMeta(meta);
-        inv.setItem(27, backitem);
-
+        generateEnchantPage(p, inv, item);
         p.openInventory(inv);
     }
 
-    public int getPlayerCurrentPosition(Player p) {
+    public int getPlayerMenuLevel(Player p) {
         if (playerNavigation.containsKey(p.getName())) {
             return playerNavigation.get(p.getName());
         } else {
@@ -73,17 +70,27 @@ public class EshopSystem {
         }
     }
 
-    private void populateInventory(Inventory inv, Player p) {
-        ItemStack[] items = enchants.generateMenuItemsForPlayer(p);
-        inv.setContents(items);
+    private void generateMainMenu(Player p, Inventory inv) {
+        List<ItemStack> enchList = enchants.getEnchantList();
+        List<ItemStack> itemlist = new ArrayList<>();
+
+        for (ItemStack item : enchList) {;
+            if (permsys.hasEnchantPermission(p, item)) {
+                itemlist.add(item);
+            }
+        }
+
+        inv.setContents(itemlist.toArray(new ItemStack[itemlist.size()]));
     }
 
-    private ItemStack[] createItemlistForEnchant(Player p, ItemStack item) {
+    private void generateEnchantPage(Player p, Inventory inv, ItemStack item) {
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         int maxLevel = ench.getMaxLevel();
         String name = item.getItemMeta().getDisplayName();
         List<ItemStack> itemlist = new ArrayList<>();
 
+        // Generate the correct items for the player.
+        // Based on permissions or OP status.
         for (int i = 1; i <= maxLevel; i++) {
             ItemStack tmp;
             if (hasEnchantLevelPerms(p, ench, i)) {
@@ -98,6 +105,14 @@ public class EshopSystem {
             itemlist.add(tmp);
         }
 
-        return itemlist.toArray(new ItemStack[itemlist.size()]);
+        // Put the generated item list in the inventory
+        inv.setContents(itemlist.toArray(new ItemStack[itemlist.size()]));
+
+        // Generate and insert a back button
+        ItemStack backitem = new ItemStack(Material.EMERALD);
+        ItemMeta meta = backitem.getItemMeta();
+        meta.setDisplayName("Go back");
+        backitem.setItemMeta(meta);
+        inv.setItem(27, backitem);
     }
 }

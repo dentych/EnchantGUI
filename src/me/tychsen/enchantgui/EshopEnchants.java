@@ -11,24 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EshopEnchants {
-    List<ItemStack> enchantList = new ArrayList<>();
+    private List<ItemStack> enchantList = new ArrayList<>();
 
     public EshopEnchants() {
         createEnchantList();
     }
 
-    public ItemStack[] generateMenuItemsForPlayer(Player p) {
-        List<ItemStack> itemlist = new ArrayList<>();
-
-        for (ItemStack item : enchantList) {
-            if (p.hasPermission("Blabla") || p.isOp()) {
-//                REMEMBER TO FIX PERMISSIONS
-                itemlist.add(item);
-            }
-        }
-
-        return itemlist.toArray(new ItemStack[itemlist.size()]);
-    }
+    public List<ItemStack> getEnchantList() { return enchantList; }
 
     /**
      * Generates the list of all enchants with their Enchantment,
@@ -62,6 +51,9 @@ public class EshopEnchants {
         addItem(Enchantment.WATER_WORKER, Material.DIAMOND_HELMET, "Aqua affinity");
     }
 
+    /**
+     * Add item to the enchant list
+     */
     private void addItem(Enchantment type, Material mat, String displayName) {
         ItemStack item = new ItemStack(mat);
         item.addEnchantment(type, 1);

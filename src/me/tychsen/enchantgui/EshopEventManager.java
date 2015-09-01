@@ -25,12 +25,12 @@ public class EshopEventManager {
             return;
         }
 
-        switch (esys.getPlayerCurrentPosition(p)) {
+        switch (esys.getPlayerMenuLevel(p)) {
             case 0:
                 esys.showEnchantPage(p, e.getCurrentItem());
                 break;
             case 1:
-                handleEnchantPage(p, e.getSlot(), e.getCurrentItem());
+                handleEnchantPage(p, e.getCurrentItem(), e.getSlot());
                 break;
             default:
                 throw new IndexOutOfBoundsException();
@@ -68,7 +68,7 @@ public class EshopEventManager {
             return false;
     }
 
-    private void handleEnchantPage(Player p, int slot, ItemStack item) {
+    private void handleEnchantPage(Player p, ItemStack item, int slot) {
         switch (slot) {
             case 27:
                 esys.showMainMenu(p);
