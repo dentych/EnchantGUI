@@ -28,7 +28,7 @@ public class EshopPermissionSys {
         return false;
     }
 
-    public boolean hasEnchantPermission(Player p, ItemStack item, int level) {
+    public boolean hasEnchantPermission(Player p, Enchantment ench, int level) {
         throw new NotImplementedException();
     }
 }

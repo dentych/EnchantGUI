@@ -93,7 +93,7 @@ public class EshopSystem {
         // Based on permissions or OP status.
         for (int i = 1; i <= maxLevel; i++) {
             ItemStack tmp;
-            if (hasEnchantLevelPerms(p, ench, i)) {
+            if (permsys.hasEnchantPermission(p, ench, i)) {
                 tmp = item.clone();
                 ItemMeta meta = tmp.getItemMeta();
                 meta.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + i));
