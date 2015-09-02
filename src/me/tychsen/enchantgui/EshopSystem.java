@@ -74,7 +74,7 @@ public class EshopSystem {
         List<ItemStack> enchList = enchants.getEnchantList();
         List<ItemStack> itemlist = new ArrayList<>();
 
-        for (ItemStack item : enchList) {;
+        for (ItemStack item : enchList) {
             if (permsys.hasEnchantPermission(p, item)) {
                 itemlist.add(item);
             }
