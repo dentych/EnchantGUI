@@ -8,9 +8,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
 
-/**
- * Created by Dennis on 01/09/2015.
- */
 public class EshopPermissionSys {
 
     public boolean hasEnchantPermission(Player p, ItemStack item) {
@@ -20,15 +17,26 @@ public class EshopPermissionSys {
         if (enchants.size() > 1) throw new RuntimeException("Item has more than one enchant!");
 
         Enchantment ench = enchants.keySet().toArray(new Enchantment[1])[0];
+        String base = "eshop.enchants.";
         String name = ench.getName().toLowerCase();
-        String perm = "eshop.enchants." + name;
+        String perm = base + name;
 
-        if (p.hasPermission(perm)) return true;
+        if (p.hasPermission(perm) || p.hasPermission(base + "all"))
+            return true;
 
         return false;
     }
 
     public boolean hasEnchantPermission(Player p, Enchantment ench, int level) {
-        throw new NotImplementedException();
+        if (p.isOp()) return true;
+
+        String base = "eshop.enchants.";
+        String enchName = ench.getName().toLowerCase();
+        String perm = base + enchName + "." + level;
+
+        if (p.hasPermission(perm) || p.hasPermission(base + enchName + ".all") || p.hasPermission(base + "all"))
+            return true;
+
+        return false;
     }
 }
