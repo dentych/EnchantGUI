@@ -1,5 +1,6 @@
 package me.tychsen.enchantgui;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -42,11 +43,13 @@ public class EshopEventManager {
 
         if (sender instanceof Player) {
             p = (Player) sender;
-        }
-
-        if (cmd.getName().equalsIgnoreCase("eshop")) {
-            if (playerHasUsePerms(p)) {
-                esys.showMainMenu((Player) sender);
+            if (cmd.getName().equalsIgnoreCase("eshop")) {
+                if (playerHasUsePerms(p)) {
+                    esys.showMainMenu(p);
+                }
+                else {
+                    p.sendMessage(ChatColor.DARK_RED + "[EnchantGUI] " + ChatColor.RED + "Sorry, you do not have access to this command");
+                }
             }
         }
 
