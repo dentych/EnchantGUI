@@ -5,10 +5,9 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
@@ -18,12 +17,14 @@ public class EshopSystem {
 
     private EshopEnchants enchants;
     private EshopPermissionSys permsys;
+    private EshopConfig config;
 
-    public EshopSystem() {
+    public EshopSystem(JavaPlugin plugin) {
         playerNavigation = new HashMap<>();
         inventorySize = 36;
         enchants = new EshopEnchants();
         permsys = new EshopPermissionSys();
+        config = new EshopConfig(plugin);
     }
 
     public void showMainMenu(Player p) {
@@ -38,7 +39,7 @@ public class EshopSystem {
         playerNavigation.put(p.getName(), 1);
 
         Inventory inv = p.getServer().createInventory(p, inventorySize,
-                "EnchantGUI: " + item.getItemMeta().getDisplayName());
+                "EnchantGUI");
 
         generateEnchantPage(p, inv, item);
         p.openInventory(inv);
@@ -55,19 +56,6 @@ public class EshopSystem {
     public void purchaseEnchant(Player p, ItemStack item) {
         p.getServer().getLogger().info("Player " + ChatColor.GREEN + p.getName() + ChatColor.RESET +
         " bought an enchant!");
-    }
-
-    public boolean hasEnchantLevelPerms(Player p, Enchantment ench, int level) {
-        String base = "eshop.enchants";
-        String name = ench.getName().toLowerCase();
-
-        if (p.hasPermission(base + ".all") || p.hasPermission(base + name + ".all") ||
-                p.hasPermission(base + name + "." + level) || p.isOp()) {
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     private void generateMainMenu(Player p, Inventory inv) {
@@ -96,7 +84,8 @@ public class EshopSystem {
             if (permsys.hasEnchantPermission(p, ench, i)) {
                 tmp = item.clone();
                 ItemMeta meta = tmp.getItemMeta();
-                meta.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + i));
+                int price = config.getPrice(ench, i);
+                meta.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + i, ChatColor.GREEN + "Price: $" + price));
                 tmp.setItemMeta(meta);
             } else {
                 tmp = new ItemStack(Material.AIR);

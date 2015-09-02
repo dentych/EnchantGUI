@@ -3,7 +3,6 @@ package me.tychsen.enchantgui;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -17,12 +16,23 @@ public class Main extends JavaPlugin implements Listener {
         getLogger().info("Loading configs and stuff...");
 
         getServer().getPluginManager().registerEvents(this, this);
-        eshop = new EshopEventManager();
+        eshop = new EshopEventManager(this);
+
+        // Generate config.yml if there is none
+        saveDefaultConfig();
     }
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
-        eshop.handleInventoryClickEvent(e);
+        if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
+            return;
+
+        getLogger().severe(e.getCurrentItem().toString());
+        try {
+            eshop.handleInventoryClickEvent(e);
+        } catch (Exception exc) {
+            getLogger().severe("EXCEPTION: " + exc.getMessage());
+        }
     }
 
     @Override

@@ -22,49 +22,42 @@ xp-option: points
 # Enchant prices
 # You can set a price for each individual level
 # You can also use all: <price> to set a price for all enchant levels.
-arrow-damage:
+arrow_damage:
     level1: 100
     level2: 200
     level3: 300
     level4: 400
     level5: 500
-arrow-fire:
+arrow_fire:
+    level1: 100
+arrow_infinite:
+    level1: 100
+arrow_knockback:
+    level1: 100
+    level2: 200
+damage_all:
     level1: 100
     level2: 200
     level3: 300
     level4: 400
     level5: 500
-arrow-infinite:
+damage_arthropods:
     level1: 100
     level2: 200
     level3: 300
     level4: 400
     level5: 500
-arrow-knockback:
+damage_undead:
     level1: 100
     level2: 200
     level3: 300
     level4: 400
     level5: 500
-damage-all:
+depth_strider:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
-damage-arthropods:
-    level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-damage-undead:
-    level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-dig-speed:
+dig_speed:
     level1: 100
     level2: 200
     level3: 300
@@ -74,95 +67,63 @@ durability:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
-fire-aspect:
+fire_aspect:
     level1: 100
     level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
 knockback:
     level1: 100
     level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-loot-bonus-blocks:
+loot_bonus_blocks:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
-loot-bonus-mobs:
+loot_bonus_mobs:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
 luck:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
 lure:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
 oxygen:
     level1: 100
     level2: 200
     level3: 300
+protection_environmental:
+    level1: 100
+    level2: 200
+    level3: 300
     level4: 400
-    level5: 500
-protection-environmental:
+protection_explosions:
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+protection_fall:
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+protection_fire:
+    level1: 100
+    level2: 200
+    level3: 300
+    level4: 400
+protection_projectile:
     level1: 100
     level2: 200
     level3: 300
     level4: 400
     level5: 500
-protection-explosions:
+silk_touch:
     level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-protection-fall:
-    level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-protection-fire:
-    level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-protection-projectile:
-    level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
-silk-touch:
-    level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500
 thorns:
     level1: 100
     level2: 200
     level3: 300
-    level4: 400
-    level5: 500
-water-worker:
+water_worker:
     level1: 100
-    level2: 200
-    level3: 300
-    level4: 400
-    level5: 500

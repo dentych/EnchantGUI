@@ -7,11 +7,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class EshopEventManager {
     /* Private variables */
-    private EshopSystem esys = new EshopSystem();
-    /* Public variables */
+    private EshopSystem esys;
+
+    /* Constructor */
+    public EshopEventManager(JavaPlugin plugin) {
+        esys = new EshopSystem(plugin);
+    }
 
     /* Public methods */
     public void handleInventoryClickEvent(InventoryClickEvent e) {
