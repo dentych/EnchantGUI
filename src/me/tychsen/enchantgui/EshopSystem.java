@@ -1,6 +1,7 @@
 package me.tychsen.enchantgui;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public class EshopSystem {
     private EshopEnchants enchants;
     private EshopPermissionSys permsys;
     private EshopConfig config;
+    private EshopVault vault;
 
     public EshopSystem(JavaPlugin plugin) {
         playerNavigation = new HashMap<>();
@@ -25,6 +27,7 @@ public class EshopSystem {
         enchants = new EshopEnchants();
         permsys = new EshopPermissionSys();
         config = new EshopConfig(plugin);
+        vault = new EshopVault(plugin);
     }
 
     public void showMainMenu(Player p) {
@@ -53,9 +56,28 @@ public class EshopSystem {
         }
     }
 
-    public void purchaseEnchant(Player p, ItemStack item) {
-        p.getServer().getLogger().info("Player " + ChatColor.GREEN + p.getName() + ChatColor.RESET +
-        " bought an enchant!");
+    public void purchaseEnchant(Player p, ItemStack item, int level) {
+        Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
+        ItemStack playerHand = p.getItemInHand();
+        int price = config.getPrice(ench, level);
+        String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
+
+        if (playerHand == null || playerHand.getType() == Material.AIR) {
+            p.sendMessage(start + "You can't enchant that!");
+            p.closeInventory();
+            return;
+        }
+
+        if (ench.canEnchantItem(playerHand)) {
+            if (vault.withdrawMoney(p, price))
+                playerHand.addEnchantment(ench, level);
+            else {
+                p.sendMessage(start + "Insufficient funds.");
+            }
+        }
+        else {
+            p.sendMessage(start + "Enchant can't be applied to the item in your hand...");
+        }
     }
 
     private void generateMainMenu(Player p, Inventory inv) {

@@ -83,7 +83,7 @@ public class EshopEventManager {
                 break;
             default:
                 if (item.getType() != Material.AIR) {
-                    esys.purchaseEnchant(p, item);
+                    esys.purchaseEnchant(p, item, slot+1);
                 }
                 break;
         }

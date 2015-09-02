@@ -27,12 +27,11 @@ public class Main extends JavaPlugin implements Listener {
         if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
             return;
 
-        getLogger().severe(e.getCurrentItem().toString());
-        try {
+        //try {
             eshop.handleInventoryClickEvent(e);
-        } catch (Exception exc) {
-            getLogger().severe("EXCEPTION: " + exc.getMessage());
-        }
+        //} catch (Exception exc) {
+        //    getLogger().severe("EXCEPTION: " + exc.getMessage());
+        //}
     }
 
     @Override
