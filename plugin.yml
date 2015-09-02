@@ -3,6 +3,7 @@ version: 0.1
 main: me.tychsen.enchantgui.Main
 
 author: Dentych
+dependency: Vault
 
 commands:
     eshop:
