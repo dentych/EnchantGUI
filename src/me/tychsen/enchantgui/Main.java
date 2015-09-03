@@ -8,6 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+
 public class Main extends JavaPlugin implements Listener {
     private EshopEventManager eshop;
 
@@ -20,18 +22,25 @@ public class Main extends JavaPlugin implements Listener {
 
         // Generate config.yml if there is none
         saveDefaultConfig();
+
+        // Enable Metrics
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException e) {
+            // Failed to submit the stats :-(
+        }
     }
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
         if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
             return;
-
-        //try {
+        try {
             eshop.handleInventoryClickEvent(e);
-        //} catch (Exception exc) {
-        //    getLogger().severe("EXCEPTION: " + exc.getMessage());
-        //}
+        } catch (Exception exc) {
+            getLogger().severe("EXCEPTION: " + exc.getMessage());
+        }
     }
 
     @Override

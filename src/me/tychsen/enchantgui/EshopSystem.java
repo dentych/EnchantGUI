@@ -69,8 +69,11 @@ public class EshopSystem {
         }
 
         if (ench.canEnchantItem(playerHand)) {
-            if (vault.withdrawMoney(p, price))
+            if (vault.withdrawMoney(p, price)) {
                 playerHand.addEnchantment(ench, level);
+                p.sendMessage(start + "Your item was enchanted with " + ChatColor.LIGHT_PURPLE + item.getItemMeta().getDisplayName() + " " + level);
+                p.closeInventory();
+            }
             else {
                 p.sendMessage(start + "Insufficient funds.");
             }
