@@ -118,7 +118,6 @@ protection_projectile:
     level2: 200
     level3: 300
     level4: 400
-    level5: 500
 silk_touch:
     level1: 100
 thorns:
