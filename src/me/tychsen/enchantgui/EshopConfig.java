@@ -17,4 +17,9 @@ public class EshopConfig {
     public int getPrice(Enchantment ench, int level) {
         return config.getInt(ench.getName().toLowerCase() + ".level" + level);
     }
+
+    public void reloadConfig() {
+        plugin.reloadConfig();
+        config = plugin.getConfig();
+    }
 }

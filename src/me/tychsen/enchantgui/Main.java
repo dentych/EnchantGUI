@@ -28,7 +28,7 @@ public class Main extends JavaPlugin implements Listener {
             Metrics metrics = new Metrics(this);
             metrics.start();
         } catch (IOException e) {
-            // Failed to submit the stats :-(
+            getLogger().severe("Couldn't start Metrics.");
         }
     }
 
@@ -45,9 +45,14 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("eshop"))
-            return eshop.handleCommand(sender, command);
-        else
-            return false;
+        if (command.getName().equalsIgnoreCase("eshop")) {
+            if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+                eshop.handleReload(sender);
+            } else {
+                eshop.handleCommand(sender, command);
+            }
+        }
+
+        return true;
     }
 }

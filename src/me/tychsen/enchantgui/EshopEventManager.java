@@ -61,6 +61,11 @@ public class EshopEventManager {
         return true;
     }
 
+    public void handleReload(CommandSender sender) {
+        esys.reloadConfig();
+        sender.sendMessage(esys.start + "Configuration file has been reloaded!");
+    }
+
     /* Private methods */
 
     /**

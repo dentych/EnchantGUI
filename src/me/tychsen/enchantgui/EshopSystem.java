@@ -13,6 +13,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.*;
 
 public class EshopSystem {
+    public static String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
+
     private Map<String, Integer> playerNavigation;
     private int inventorySize;
 
@@ -60,7 +62,6 @@ public class EshopSystem {
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();
         int price = config.getPrice(ench, level);
-        String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
 
         if (playerHand == null || playerHand.getType() == Material.AIR) {
             p.sendMessage(start + "You can't enchant that!");
@@ -81,6 +82,10 @@ public class EshopSystem {
         else {
             p.sendMessage(start + "Enchant can't be applied to the item in your hand...");
         }
+    }
+
+    public void reloadConfig() {
+        config.reloadConfig();
     }
 
     private void generateMainMenu(Player p, Inventory inv) {
