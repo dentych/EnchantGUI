@@ -53,7 +53,7 @@ public class Main extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("eshop")) {
             if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
-                eshop.handleReload(sender);
+                EshopConfig.getInstance().reloadConfig(sender);
             } else {
                 eshop.handleCommand(sender, command);
             }

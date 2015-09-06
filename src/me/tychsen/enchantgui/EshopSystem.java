@@ -35,7 +35,7 @@ public class EshopSystem {
     public void showMainMenu(Player p) {
         playerNavigation.put(p.getName(), 0);
 
-        Inventory inv = p.getServer().createInventory(p, inventorySize, "EnchantGUI");
+        Inventory inv = p.getServer().createInventory(p, inventorySize, config.getMenuName());
         generateMainMenu(p, inv);
         p.openInventory(inv);
     }
@@ -82,10 +82,6 @@ public class EshopSystem {
         else {
             p.sendMessage(start + "Enchant can't be applied to the item in your hand...");
         }
-    }
-
-    public void reloadConfig() {
-        config.reloadConfig();
     }
 
     private void generateMainMenu(Player p, Inventory inv) {
