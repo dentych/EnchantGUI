@@ -9,8 +9,8 @@ public class EshopConfig {
     private JavaPlugin plugin;
     private FileConfiguration config;
 
-    public EshopConfig(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public EshopConfig() {
+        this.plugin = Main.getInstance();
         config = plugin.getConfig();
     }
 

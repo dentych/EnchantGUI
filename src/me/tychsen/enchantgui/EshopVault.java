@@ -10,8 +10,8 @@ public class EshopVault {
     private Economy econ = null;
     private JavaPlugin plugin;
 
-    public EshopVault(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public EshopVault() {
+        this.plugin = Main.getInstance();
 
         if (!setupEconomy()) {
             plugin.getLogger().severe("Dependency (Vault) not found. Disabling the plugin!");

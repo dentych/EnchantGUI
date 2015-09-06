@@ -23,13 +23,13 @@ public class EshopSystem {
     private EshopConfig config;
     private EshopVault vault;
 
-    public EshopSystem(JavaPlugin plugin) {
+    public EshopSystem() {
         playerNavigation = new HashMap<>();
         inventorySize = 36;
         enchants = new EshopEnchants();
         permsys = new EshopPermissionSys();
-        config = new EshopConfig(plugin);
-        vault = new EshopVault(plugin);
+        config = new EshopConfig();
+        vault = new EshopVault();
     }
 
     public void showMainMenu(Player p) {

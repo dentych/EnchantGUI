@@ -11,14 +11,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 
 public class Main extends JavaPlugin implements Listener {
+    public static Main instance;
     private EshopEventManager eshop;
 
     @Override
     public void onEnable() {
+        instance = this;
         getLogger().info("Loading configs and stuff...");
 
         getServer().getPluginManager().registerEvents(this, this);
-        eshop = new EshopEventManager(this);
+        eshop = new EshopEventManager();
 
         // Generate config.yml if there is none
         saveDefaultConfig();
@@ -30,6 +32,10 @@ public class Main extends JavaPlugin implements Listener {
         } catch (IOException e) {
             getLogger().severe("Couldn't start Metrics.");
         }
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 
     @EventHandler

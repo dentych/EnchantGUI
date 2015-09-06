@@ -14,8 +14,8 @@ public class EshopEventManager {
     private EshopSystem esys;
 
     /* Constructor */
-    public EshopEventManager(JavaPlugin plugin) {
-        esys = new EshopSystem(plugin);
+    public EshopEventManager() {
+        esys = new EshopSystem();
     }
 
     /* Public methods */
