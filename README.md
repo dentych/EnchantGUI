@@ -1,4 +1,6 @@
 EnchantGUI
 ==========
 
-I have begun working on this plugin again. I am rewriting the entire code base, as it was very clunky and un-maintainable before. Hopefully I'll have a working version of this plugin ready quite soon.
+EnchantGUI has been released again and is in continuous development.
+
+The main page concerning the plugin can be found at: https://www.spigotmc.org/resources/enchantgui.11701/
