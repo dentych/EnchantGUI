@@ -44,7 +44,7 @@ public class EshopSystem {
         playerNavigation.put(p.getName(), 1);
 
         Inventory inv = p.getServer().createInventory(p, inventorySize,
-                "EnchantGUI");
+                config.getMenuName());
 
         generateEnchantPage(p, inv, item);
         p.openInventory(inv);

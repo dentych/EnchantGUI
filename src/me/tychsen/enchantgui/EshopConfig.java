@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EshopConfig {
     private static EshopConfig instance;
-    private JavaPlugin plugin;
+    private Main plugin;
     private FileConfiguration config;
 
     public EshopConfig() {

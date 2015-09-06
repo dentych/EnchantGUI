@@ -20,7 +20,7 @@ public class EshopEventManager {
 
     /* Public methods */
     public void handleInventoryClickEvent(InventoryClickEvent e) {
-        boolean correctEvent = e.getInventory().getName().toLowerCase().startsWith("enchantgui");
+        boolean correctEvent = e.getInventory().getName().toLowerCase().startsWith(EshopConfig.getInstance().getMenuName().toLowerCase());
         Player p;
 
         if (correctEvent && e.getWhoClicked() instanceof Player) {
