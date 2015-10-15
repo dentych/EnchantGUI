@@ -58,10 +58,15 @@ public class EshopSystem {
         }
     }
 
-    public void purchaseEnchant(Player p, ItemStack item, int level) {
+    public void purchaseEnchant(Player p, ItemStack item, int slot) {
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();
+        String[] enchantLevels = config.getEnchantLevels(ench);
+        int level = Integer.parseInt(enchantLevels[slot-1].substring(5));
         int price = config.getPrice(ench, level);
+
+        // DEBUG
+        p.sendMessage("Slot: " + slot + ". Level: " + level);
 
         if (playerHand == null || playerHand.getType() == Material.AIR) {
             p.sendMessage(start + "You can't enchant that!");
@@ -71,7 +76,7 @@ public class EshopSystem {
 
         if (ench.canEnchantItem(playerHand)) {
             if (vault.withdrawMoney(p, price)) {
-                playerHand.addEnchantment(ench, level);
+                enchantItem(playerHand, ench, level);
                 p.sendMessage(start + "Your item was enchanted with " + ChatColor.LIGHT_PURPLE + item.getItemMeta().getDisplayName() + " " + level);
                 p.closeInventory();
             }
@@ -81,6 +86,17 @@ public class EshopSystem {
         }
         else {
             p.sendMessage(start + "Enchant can't be applied to the item in your hand...");
+        }
+    }
+
+    private void enchantItem(ItemStack playerHand, Enchantment ench, int level) {
+        if (level > ench.getMaxLevel()) {
+            // Unsafe enchant
+            playerHand.addUnsafeEnchantment(ench, level);
+        }
+        else {
+            // Safe, regular enchant
+            playerHand.addEnchantment(ench, level);
         }
     }
 
@@ -105,13 +121,17 @@ public class EshopSystem {
 
         // Generate the correct items for the player.
         // Based on permissions or OP status.
-        for (int i = 1; i <= maxLevel; i++) {
+        String[] enchantLevels = config.getEnchantLevels(ench);
+
+        for (String enchantLevel : enchantLevels) {
+            enchantLevel = enchantLevel.substring(5);
+            int level = Integer.parseInt(enchantLevel);
             ItemStack tmp;
-            if (permsys.hasEnchantPermission(p, ench, i)) {
+            if (permsys.hasEnchantPermission(p, ench, level)) {
                 tmp = item.clone();
                 ItemMeta meta = tmp.getItemMeta();
-                int price = config.getPrice(ench, i);
-                meta.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + i, ChatColor.GREEN + "Price: $" + price));
+                int price = config.getPrice(ench, level);
+                meta.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + level, ChatColor.GREEN + "Price: $" + price));
                 tmp.setItemMeta(meta);
             } else {
                 tmp = new ItemStack(Material.AIR);

@@ -7,6 +7,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Map;
+
 public class EshopConfig {
     private static EshopConfig instance;
     private Main plugin;
@@ -42,6 +44,20 @@ public class EshopConfig {
             config = plugin.getConfig();
             sender.sendMessage(EshopSystem.start + "Configuration file has been reloaded!");
         }
+    }
+
+    public String[] getEnchantLevels(Enchantment ench) {
+        String path = ench.getName().toLowerCase();
+        Map<String, Object> enchantMap = config.getConfigurationSection(path).getValues(false);
+        String[] enchantLevels = new String[enchantMap.size()];
+
+        int position = 0;
+        for (Map.Entry<String, Object> entry : enchantMap.entrySet()) {
+            enchantLevels[position] = entry.getKey();
+            position++;
+        }
+
+        return enchantLevels;
     }
 
     public static EshopConfig getInstance() {
