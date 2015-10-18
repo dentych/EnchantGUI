@@ -28,6 +28,8 @@ arrow_damage:
     level3: 300
     level4: 400
     level5: 500
+    level8: 800
+    level10: 1000
 arrow_fire:
     level1: 100
 arrow_infinite:
