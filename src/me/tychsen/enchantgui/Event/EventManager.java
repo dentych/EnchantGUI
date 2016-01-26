@@ -36,7 +36,10 @@ public class EventManager implements Listener, CommandExecutor {
         }
     }
 
-    @EventHandler
+    //@EventHandler
+    // TODO: Implement Enchanting table right click to open menu.
+    // Requires more work, though, as it's currently the item in the hand
+    // that is enchanted - which will then be an enchanting table...
     public void onPlayerInteractEvent(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR &&
                 e.getPlayer().getItemInHand().getType() == Material.ENCHANTMENT_TABLE) {
@@ -56,32 +59,20 @@ public class EventManager implements Listener, CommandExecutor {
         } else {
             return;
         }
-
-        /*
-        switch (system.getPlayerMenuLevel(p)) {
-            case 0:
-                system.showEnchantPage(p, e.getCurrentItem());
-                break;
-            case 1:
-                handleEnchantPage(p, e.getCurrentItem(), e.getSlot());
-                break;
-            default:
-                throw new IndexOutOfBoundsException();
-        }
-        */
     }
 
     private void handlePlayerInteractEvent(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (p.isOp()) {
             // TODO: || playerHasUsePerms(p) <-- Implement this crap somewhere
+            // IMPORTANT: PlayerInteractEvent EventHandler is currently disabled, so no worries...
             system.showMainMenu(e.getPlayer());
         }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (command.getName().equalsIgnoreCase("eshop") && sender instanceof Player) {
+        if (command.getName().equalsIgnoreCase("eshop")) {
             handleCommand(sender, command, args);
         }
 
@@ -89,14 +80,19 @@ public class EventManager implements Listener, CommandExecutor {
     }
 
     private boolean handleCommand(CommandSender sender, Command cmd, String[] args) {
-        Player p = (Player) sender;
 
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("reload")) {
                 EshopConfig.getInstance().reloadConfig(sender);
             }
         } else {
-            system.showMainMenu(p);
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                system.showMainMenu(p);
+            }
+            else {
+                sender.sendMessage("Can't use this command from console...");
+            }
         }
 
         return true;
