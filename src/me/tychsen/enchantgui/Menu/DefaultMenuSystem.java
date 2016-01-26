@@ -41,6 +41,7 @@ public class DefaultMenuSystem implements MenuSystem {
 
     @Override
     public void showMainMenu(Player p) {
+        if (playerMenu.containsKey(p.getName())) playerMenu.remove(p.getName());
         if (permsys.hasUsePermission(p)) {
             Inventory inv = generator.mainMenu(p);
 
