@@ -69,25 +69,6 @@ public class DefaultMenuSystem implements MenuSystem {
         }
     }
 
-    public void showEnchantPage(Player p, ItemStack item) {
-        //playerNavigation.put(p.getName(), 1);
-
-        Inventory inv = p.getServer().createInventory(p, inventorySize,
-                config.getMenuName());
-
-        generateEnchantPage(p, inv, item);
-        p.openInventory(inv);
-    }
-
-    public int getPlayerMenuLevel(Player p) {
-        if (playerMenu.containsKey(p.getName())) {
-            //return playerMenu.get(p.getName());
-        } else {
-            throw new NoSuchElementException("Player is missing from navigation list.");
-        }
-        return 0;
-    }
-
     public void purchaseEnchant(Player p, ItemStack item, int slot) {
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();
@@ -125,48 +106,5 @@ public class DefaultMenuSystem implements MenuSystem {
             // Safe, regular enchant
             playerHand.addEnchantment(ench, level);
         }
-    }
-
-    private void generateEnchantPage(Player p, Inventory inv, ItemStack item) {
-        Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
-        int maxLevel = ench.getMaxLevel();
-        String name = item.getItemMeta().getDisplayName();
-        List<ItemStack> itemlist = new ArrayList<>();
-
-        // Generate the correct items for the player.
-        // Based on permissions or OP status.
-        String[] enchantLevels = config.getEnchantLevels(ench);
-
-        for (String enchantLevel : enchantLevels) {
-            enchantLevel = enchantLevel.substring(5);
-            int level = Integer.parseInt(enchantLevel);
-            ItemStack tmp;
-            if (permsys.hasEnchantPermission(p, ench, level)) {
-                tmp = item.clone();
-                ItemMeta meta = tmp.getItemMeta();
-                int price = config.getPrice(ench, level);
-                List<String> lores = new ArrayList<String>();
-                lores.add(ChatColor.GOLD + "Level: " + level);
-                if (!config.economyDisabled()) {
-                    lores.add(ChatColor.GREEN + "Price: $" + price);
-                }
-                meta.setLore(lores);
-                tmp.setItemMeta(meta);
-            } else {
-                tmp = new ItemStack(Material.AIR);
-            }
-
-            itemlist.add(tmp);
-        }
-
-        // Put the generated item list in the inventory
-        inv.setContents(itemlist.toArray(new ItemStack[itemlist.size()]));
-
-        // Generate and insert a back button
-        ItemStack backitem = new ItemStack(Material.EMERALD);
-        ItemMeta meta = backitem.getItemMeta();
-        meta.setDisplayName("Go back");
-        backitem.setItemMeta(meta);
-        inv.setItem(27, backitem);
     }
 }
