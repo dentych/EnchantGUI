@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-public class DefaultEshopSystem implements EshopSystem {
+public class DefaultMenuSystem implements MenuSystem {
     public static String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
 
     private Map<String, Integer> playerNavigation;
@@ -25,7 +25,7 @@ public class DefaultEshopSystem implements EshopSystem {
     private EshopConfig config;
     private EshopVault vault;
 
-    public DefaultEshopSystem() {
+    public DefaultMenuSystem() {
         playerNavigation = new HashMap<>();
         inventorySize = 36;
         enchants = new EshopEnchants();
@@ -37,6 +37,7 @@ public class DefaultEshopSystem implements EshopSystem {
         }
     }
 
+    @Override
     public void showMainMenu(Player p) {
         playerNavigation.put(p.getName(), 0);
 
@@ -45,6 +46,7 @@ public class DefaultEshopSystem implements EshopSystem {
         p.openInventory(inv);
     }
 
+    @Override
     public void showEnchantPage(Player p, ItemStack item) {
         playerNavigation.put(p.getName(), 1);
 
@@ -55,6 +57,7 @@ public class DefaultEshopSystem implements EshopSystem {
         p.openInventory(inv);
     }
 
+    @Override
     public int getPlayerMenuLevel(Player p) {
         if (playerNavigation.containsKey(p.getName())) {
             return playerNavigation.get(p.getName());
@@ -63,6 +66,7 @@ public class DefaultEshopSystem implements EshopSystem {
         }
     }
 
+    @Override
     public void purchaseEnchant(Player p, ItemStack item, int slot) {
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();

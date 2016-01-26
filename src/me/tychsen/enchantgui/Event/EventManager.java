@@ -1,7 +1,7 @@
 package me.tychsen.enchantgui.Event;
 
 import me.tychsen.enchantgui.Config.EshopConfig;
-import me.tychsen.enchantgui.Menu.EshopSystem;
+import me.tychsen.enchantgui.Menu.MenuSystem;
 import me.tychsen.enchantgui.Main;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class EventManager implements Listener {
-    private EshopSystem system;
+    private MenuSystem system;
 
-    public EventManager(EshopSystem system) {
+    public EventManager(MenuSystem system) {
         this.system = system;
     }
 
@@ -50,9 +50,9 @@ public class EventManager implements Listener {
             return;
         }
 
-        switch (esys.getPlayerMenuLevel(p)) {
+        switch (system.getPlayerMenuLevel(p)) {
             case 0:
-                esys.showEnchantPage(p, e.getCurrentItem());
+                system.showEnchantPage(p, e.getCurrentItem());
                 break;
             case 1:
                 handleEnchantPage(p, e.getCurrentItem(), e.getSlot());
@@ -64,19 +64,20 @@ public class EventManager implements Listener {
 
     private void handlePlayerInteractEvent(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if (p.isOp() || playerHasUsePerms(p)) {
-            esys.showMainMenu(e.getPlayer());
+        if (p.isOp()) {
+            // TODO: || playerHasUsePerms(p) <-- Implement this crap somewhere
+            system.showMainMenu(e.getPlayer());
         }
     }
 
     private void handleEnchantPage(Player p, ItemStack item, int slot) {
         switch (slot) {
             case 27:
-                esys.showMainMenu(p);
+                system.showMainMenu(p);
                 break;
             default:
                 if (item.getType() != Material.AIR) {
-                    esys.purchaseEnchant(p, item, slot + 1);
+                    system.purchaseEnchant(p, item, slot + 1);
                 }
                 break;
         }

@@ -1,6 +1,6 @@
 package me.tychsen.enchantgui.Config;
 
-import me.tychsen.enchantgui.Menu.DefaultEshopSystem;
+import me.tychsen.enchantgui.Menu.DefaultMenuSystem;
 import me.tychsen.enchantgui.Main;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -41,10 +41,10 @@ public class EshopConfig {
         if (sender.isOp() || sender.hasPermission("eshop.admin")) {
             plugin.reloadConfig();
             config = plugin.getConfig();
-            sender.sendMessage(DefaultEshopSystem.start + "Configuration file has been reloaded!");
+            sender.sendMessage(DefaultMenuSystem.start + "Configuration file has been reloaded!");
         }
         else {
-            sender.sendMessage(DefaultEshopSystem.start + "Sorry, you do not have access to this command");
+            sender.sendMessage(DefaultMenuSystem.start + "Sorry, you do not have access to this command");
         }
     }
 
