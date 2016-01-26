@@ -1,26 +1,28 @@
 package me.tychsen.enchantgui;
 
+import me.tychsen.enchantgui.Event.EventManager;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 
 public class Main extends JavaPlugin implements Listener {
-    public static Main instance;
-    private EshopEventManager eshop;
+    private static Main instance;
 
     @Override
     public void onEnable() {
         instance = this;
         getLogger().info("Loading configs and stuff...");
 
-        getServer().getPluginManager().registerEvents(this, this);
-        eshop = new EshopEventManager();
+        EventManager manager = new EventManager();
+        getServer().getPluginManager().registerEvents(manager, this);
 
         // Generate config.yml if there is none
         saveDefaultConfig();
@@ -38,25 +40,10 @@ public class Main extends JavaPlugin implements Listener {
         return instance;
     }
 
-    @EventHandler
-    public void onInventoryClickEvent(InventoryClickEvent e) {
-        if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
-            return;
-        try {
-            eshop.handleInventoryClickEvent(e);
-        } catch (Exception exc) {
-            getLogger().severe("EXCEPTION: " + exc.getMessage());
-        }
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("eshop")) {
-            if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
-                EshopConfig.getInstance().reloadConfig(sender);
-            } else {
-                eshop.handleCommand(sender, command);
-            }
+            eshop.handleCommand(sender, command, args);
         }
 
         return true;

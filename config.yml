@@ -13,11 +13,16 @@ opt-out: false
 menu-name: EnchantGUI
 
 # Payment currency can be one of two. Either 'money' for regular money (using Vault+Economy system)
-# or 'xp' for experience points.
+# or 'xp' for experience points (though, XP is currently not supported).
+# You can also put 'disable' to disable the economy-aspect of the plugin entirely.
 payment-currency: money
 # XP options: points = prices are in xp points, levels = prices are in XP levels.
 # xp-option is only used if payment-currency is set to xp.
 xp-option: points
+
+# 'command' - The Eshop menu is opened with /eshop.
+# 'item' - The Eshop menu is opened by right clicking while holding an enchanting table.
+eshop-menu: command
 
 # Enchant prices
 # You can set a price for each individual level

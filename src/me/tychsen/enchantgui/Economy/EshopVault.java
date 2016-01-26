@@ -1,5 +1,6 @@
-package me.tychsen.enchantgui;
+package me.tychsen.enchantgui.Economy;
 
+import me.tychsen.enchantgui.Main;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.entity.Player;

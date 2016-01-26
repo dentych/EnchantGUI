@@ -1,18 +1,20 @@
-package me.tychsen.enchantgui;
+package me.tychsen.enchantgui.Menu;
 
+import me.tychsen.enchantgui.Config.EshopConfig;
+import me.tychsen.enchantgui.Economy.EshopVault;
+import me.tychsen.enchantgui.EshopEnchants;
+import me.tychsen.enchantgui.Permissions.EshopPermissionSys;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
-public class EshopSystem {
+public class DefaultEshopSystem implements EshopSystem {
     public static String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
 
     private Map<String, Integer> playerNavigation;
@@ -23,13 +25,16 @@ public class EshopSystem {
     private EshopConfig config;
     private EshopVault vault;
 
-    public EshopSystem() {
+    public DefaultEshopSystem() {
         playerNavigation = new HashMap<>();
         inventorySize = 36;
         enchants = new EshopEnchants();
         permsys = new EshopPermissionSys();
         config = new EshopConfig();
-        vault = new EshopVault();
+
+        if (!config.economyDisabled()) {
+            vault = new EshopVault();
+        }
     }
 
     public void showMainMenu(Player p) {
@@ -66,7 +71,7 @@ public class EshopSystem {
         int price = config.getPrice(ench, level);
 
         // DEBUG
-        p.sendMessage("Slot: " + slot + ". Level: " + level);
+        //p.sendMessage("Slot: " + slot + ". Level: " + level);
 
         if (playerHand == null || playerHand.getType() == Material.AIR) {
             p.sendMessage(start + "You can't enchant that!");
@@ -75,7 +80,7 @@ public class EshopSystem {
         }
 
         if (ench.canEnchantItem(playerHand)) {
-            if (vault.withdrawMoney(p, price)) {
+            if (config.economyDisabled() || vault.withdrawMoney(p, price)) {
                 enchantItem(playerHand, ench, level);
                 p.sendMessage(start + "Your item was enchanted with " + ChatColor.LIGHT_PURPLE + item.getItemMeta().getDisplayName() + " " + level);
                 p.closeInventory();
@@ -131,7 +136,12 @@ public class EshopSystem {
                 tmp = item.clone();
                 ItemMeta meta = tmp.getItemMeta();
                 int price = config.getPrice(ench, level);
-                meta.setLore(Arrays.asList(ChatColor.GOLD + "Level: " + level, ChatColor.GREEN + "Price: $" + price));
+                List<String> lores = new ArrayList<String>();
+                lores.add(ChatColor.GOLD + "Level: " + level);
+                if (!config.economyDisabled()) {
+                    lores.add(ChatColor.GREEN + "Price: $" + price);
+                }
+                meta.setLore(lores);
                 tmp.setItemMeta(meta);
             } else {
                 tmp = new ItemStack(Material.AIR);

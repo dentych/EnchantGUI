@@ -1,11 +1,10 @@
-package me.tychsen.enchantgui;
+package me.tychsen.enchantgui.Config;
 
+import me.tychsen.enchantgui.Menu.DefaultEshopSystem;
+import me.tychsen.enchantgui.Main;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
 
@@ -42,7 +41,10 @@ public class EshopConfig {
         if (sender.isOp() || sender.hasPermission("eshop.admin")) {
             plugin.reloadConfig();
             config = plugin.getConfig();
-            sender.sendMessage(EshopSystem.start + "Configuration file has been reloaded!");
+            sender.sendMessage(DefaultEshopSystem.start + "Configuration file has been reloaded!");
+        }
+        else {
+            sender.sendMessage(DefaultEshopSystem.start + "Sorry, you do not have access to this command");
         }
     }
 
@@ -58,6 +60,10 @@ public class EshopConfig {
         }
 
         return enchantLevels;
+    }
+
+    public boolean economyDisabled() {
+        return (config.getString("payment-currency").toLowerCase().equals("disable"));
     }
 
     public static EshopConfig getInstance() {

@@ -1,58 +1,37 @@
 package me.tychsen.enchantgui;
 
+import me.tychsen.enchantgui.Config.EshopConfig;
+import me.tychsen.enchantgui.Menu.DefaultEshopSystem;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class EshopEventManager {
     /* Private variables */
-    private EshopSystem esys;
+    private DefaultEshopSystem esys;
 
     /* Constructor */
     public EshopEventManager() {
-        esys = new EshopSystem();
+        esys = new DefaultEshopSystem();
     }
 
     /* Public methods */
-    public void handleInventoryClickEvent(InventoryClickEvent e) {
-        boolean correctEvent = e.getInventory().getName().toLowerCase().startsWith(EshopConfig.getInstance().getMenuName().toLowerCase());
-        Player p;
 
-        if (correctEvent && e.getWhoClicked() instanceof Player) {
-            e.setCancelled(true); // Cancel whatever default action might occur
-            p = (Player) e.getWhoClicked();
-        }
-        else {
-            return;
-        }
 
-        switch (esys.getPlayerMenuLevel(p)) {
-            case 0:
-                esys.showEnchantPage(p, e.getCurrentItem());
-                break;
-            case 1:
-                handleEnchantPage(p, e.getCurrentItem(), e.getSlot());
-                break;
-            default:
-                throw new IndexOutOfBoundsException();
-        }
-    }
-
-    public boolean handleCommand(CommandSender sender, Command cmd) {
+    public boolean handleCommand(CommandSender sender, Command cmd, String[] args) {
         Player p = null;
 
         if (sender instanceof Player) {
             p = (Player) sender;
-            if (cmd.getName().equalsIgnoreCase("eshop")) {
+            if (args.length > 0) {
+                if (args[0].equalsIgnoreCase("reload")) {
+                    EshopConfig.getInstance().reloadConfig(sender);
+                }
+            } else {
                 if (playerHasUsePerms(p)) {
                     esys.showMainMenu(p);
-                }
-                else {
+                } else {
                     p.sendMessage(ChatColor.DARK_RED + "[EnchantGUI] " + ChatColor.RED + "Sorry, you do not have access to this command");
                 }
             }
@@ -76,16 +55,7 @@ public class EshopEventManager {
             return false;
     }
 
-    private void handleEnchantPage(Player p, ItemStack item, int slot) {
-        switch (slot) {
-            case 27:
-                esys.showMainMenu(p);
-                break;
-            default:
-                if (item.getType() != Material.AIR) {
-                    esys.purchaseEnchant(p, item, slot+1);
-                }
-                break;
-        }
-    }
+
+
+
 }
