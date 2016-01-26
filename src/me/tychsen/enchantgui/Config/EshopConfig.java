@@ -1,5 +1,8 @@
 package me.tychsen.enchantgui.Config;
 
+import me.tychsen.enchantgui.Economy.MoneyPayment;
+import me.tychsen.enchantgui.Economy.NullPayment;
+import me.tychsen.enchantgui.Economy.PaymentStrategy;
 import me.tychsen.enchantgui.Menu.DefaultMenuSystem;
 import me.tychsen.enchantgui.Main;
 import org.bukkit.command.CommandSender;
@@ -12,6 +15,7 @@ public class EshopConfig {
     private static EshopConfig instance;
     private Main plugin;
     private FileConfiguration config;
+    private PaymentStrategy economy;
 
     public EshopConfig() {
         instance = this;
@@ -41,9 +45,9 @@ public class EshopConfig {
         if (sender.isOp() || sender.hasPermission("eshop.admin")) {
             plugin.reloadConfig();
             config = plugin.getConfig();
+            economy = null;
             sender.sendMessage(DefaultMenuSystem.start + "Configuration file has been reloaded!");
-        }
-        else {
+        } else {
             sender.sendMessage(DefaultMenuSystem.start + "Sorry, you do not have access to this command");
         }
     }
@@ -62,8 +66,23 @@ public class EshopConfig {
         return enchantLevels;
     }
 
-    public boolean economyDisabled() {
-        return (config.getString("payment-currency").toLowerCase().equals("disable"));
+    public PaymentStrategy getEconomy() {
+        if (economy == null) {
+            switch (config.getString("payment-currency").toLowerCase()) {
+                case "money":
+                    economy = new MoneyPayment();
+                    break;
+                case "xp":
+                    // TODO: Implement XP payment.
+                    economy = new NullPayment();
+                    break;
+                default:
+                    economy = new NullPayment();
+                    break;
+            }
+        }
+
+        return economy;
     }
 
     public static EshopConfig getInstance() {

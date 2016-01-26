@@ -2,6 +2,7 @@ package me.tychsen.enchantgui.Menu;
 
 import me.tychsen.enchantgui.Config.EshopConfig;
 import me.tychsen.enchantgui.Config.EshopEnchants;
+import me.tychsen.enchantgui.Economy.NullPayment;
 import me.tychsen.enchantgui.Permissions.EshopPermissionSys;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DefaultMenuGenerator implements MenuGenerator {
     private int inventorySize;
@@ -23,7 +25,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
     public DefaultMenuGenerator(int inventorySize, EshopConfig config, EshopPermissionSys permsys) {
         this.inventorySize = inventorySize;
         this.config = config;
-        // TODO: Figure out better fix.
+        // TODO: Figure out better fix of EshopEnchants.
         this.enchants = new EshopEnchants();
         this.permsys = permsys;
     }
@@ -35,8 +37,8 @@ public class DefaultMenuGenerator implements MenuGenerator {
         return inv;
     }
 
-    public Inventory enchantMenu(Player p, ItemStack item) {
-        Inventory inv = generateEnchantMenu(p, item);
+    public Inventory enchantMenu(Player p, ItemStack item, Map<String, String[]> playerLevels) {
+        Inventory inv = generateEnchantMenu(p, item, playerLevels);
 
         return inv;
     }
@@ -54,7 +56,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
         inv.setContents(itemlist.toArray(new ItemStack[itemlist.size()]));
     }
 
-    private Inventory generateEnchantMenu(Player p, ItemStack item) {
+    private Inventory generateEnchantMenu(Player p, ItemStack item, Map<String, String[]> playerLevels) {
         Inventory inv = p.getServer().createInventory(p, inventorySize, config.getMenuName());
 
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
@@ -64,6 +66,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
         // Generate the correct items for the player.
         // Based on permissions or OP status.
         String[] enchantLevels = config.getEnchantLevels(ench);
+        List<String> levels = new ArrayList<>();
 
         for (String enchantLevel : enchantLevels) {
             enchantLevel = enchantLevel.substring(5);
@@ -73,7 +76,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
                 ItemMeta meta = tmp.getItemMeta();
                 List<String> lores = new ArrayList<String>();
                 lores.add(ChatColor.GOLD + "Level: " + level);
-                if (!config.economyDisabled()) {
+                if (!(config.getEconomy() instanceof NullPayment)) {
                     int price = config.getPrice(ench, level);
                     lores.add(ChatColor.GREEN + "Price: $" + price);
                 }
@@ -81,6 +84,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
                 tmp.setItemMeta(meta);
 
                 itemlist.add(tmp);
+                levels.add(enchantLevel);
             }
         }
 
@@ -94,6 +98,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
         backitem.setItemMeta(meta);
         inv.setItem(27, backitem);
 
+        playerLevels.put(p.getName(), levels.toArray(new String[levels.size()]));
         return inv;
     }
 }

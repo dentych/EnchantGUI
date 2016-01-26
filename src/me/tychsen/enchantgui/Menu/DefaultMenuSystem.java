@@ -1,8 +1,8 @@
 package me.tychsen.enchantgui.Menu;
 
 import me.tychsen.enchantgui.Config.EshopConfig;
-import me.tychsen.enchantgui.Economy.EshopVault;
 import me.tychsen.enchantgui.Config.EshopEnchants;
+import me.tychsen.enchantgui.Economy.PaymentStrategy;
 import me.tychsen.enchantgui.Permissions.EshopPermissionSys;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,35 +12,31 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DefaultMenuSystem implements MenuSystem {
     public static String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
 
-    private Map<String, Inventory> playerMenu;
+    private Map<String, String[]> playerLevels;
     private int inventorySize;
 
     private EshopEnchants enchants;
     private EshopPermissionSys permsys;
     private EshopConfig config;
-    private EshopVault vault;
     private MenuGenerator generator;
 
     public DefaultMenuSystem() {
-        playerMenu = new HashMap<>();
+        playerLevels = new HashMap<>();
         inventorySize = 36;
         permsys = new EshopPermissionSys();
         config = new EshopConfig();
         generator = new DefaultMenuGenerator(36, config, permsys);
-
-        if (!config.economyDisabled()) {
-            vault = new EshopVault();
-        }
     }
 
     @Override
     public void showMainMenu(Player p) {
-        if (playerMenu.containsKey(p.getName())) playerMenu.remove(p.getName());
+        if (playerLevels.containsKey(p.getName())) playerLevels.remove(p.getName());
         if (permsys.hasUsePermission(p)) {
             Inventory inv = generator.mainMenu(p);
 
@@ -53,26 +49,29 @@ public class DefaultMenuSystem implements MenuSystem {
 
     @Override
     public void handleMenuClick(Player p, InventoryClickEvent event) {
-        if (playerMenu.containsKey(p.getName())) {
+        if (playerLevels.containsKey(p.getName())) {
             if (event.getCurrentItem().getType() == Material.EMERALD) {
-                playerMenu.remove(p.getName());
+                playerLevels.remove(p.getName());
                 showMainMenu(p);
             } else if (event.getCurrentItem().getType() != Material.AIR){
-                // TODO: Sell enchant to player.
-                p.sendMessage("Yay, you bai enchant. Slot: " + event.getSlot());
+                // TODO: Figure out better way of purchasing enchants.
+                // For example a seperate class to call purchaseEnchant on.
+                // Required to enable Enchanting Table menu opener..
+                purchaseEnchant(p, event);
             }
         } else {
-            Inventory inv = generator.enchantMenu(p, event.getCurrentItem());
-            playerMenu.put(p.getName(), inv);
+            // TODO: Better implementation of the "player levels".. enchantMenu should not modify playerLevels.
+            Inventory inv = generator.enchantMenu(p, event.getCurrentItem(), playerLevels);
             p.openInventory(inv);
         }
     }
 
-    public void purchaseEnchant(Player p, ItemStack item, int slot) {
+    private void purchaseEnchant(Player p, InventoryClickEvent event) {
+        ItemStack item = event.getCurrentItem();
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();
-        String[] enchantLevels = config.getEnchantLevels(ench);
-        int level = Integer.parseInt(enchantLevels[slot - 1].substring(5));
+        int level = Integer.parseInt(playerLevels.get(p.getName())[event.getSlot()]);
+
         int price = config.getPrice(ench, level);
 
         // DEBUG
@@ -85,7 +84,9 @@ public class DefaultMenuSystem implements MenuSystem {
         }
 
         if (ench.canEnchantItem(playerHand)) {
-            if (config.economyDisabled() || vault.withdrawMoney(p, price)) {
+            PaymentStrategy payment = config.getEconomy();
+
+            if (payment.withdraw(p, price)) {
                 enchantItem(playerHand, ench, level);
                 p.sendMessage(start + "Your item was enchanted with " + ChatColor.LIGHT_PURPLE + item.getItemMeta().getDisplayName() + " " + level);
                 p.closeInventory();

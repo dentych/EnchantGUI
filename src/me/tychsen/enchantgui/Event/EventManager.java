@@ -79,20 +79,6 @@ public class EventManager implements Listener, CommandExecutor {
         }
     }
 
-    private void handleEnchantPage(Player p, ItemStack item, int slot) {
-        switch (slot) {
-            case 27:
-                system.showMainMenu(p);
-                break;
-            default:
-                if (item.getType() != Material.AIR) {
-                    // TODO: Fix
-                    //system.purchaseEnchant(p, item, slot + 1);
-                }
-                break;
-        }
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (command.getName().equalsIgnoreCase("eshop") && sender instanceof Player) {

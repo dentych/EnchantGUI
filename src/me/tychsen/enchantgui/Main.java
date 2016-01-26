@@ -1,6 +1,7 @@
 package me.tychsen.enchantgui;
 
 import me.tychsen.enchantgui.Config.EshopConfig;
+import me.tychsen.enchantgui.Economy.PaymentStrategy;
 import me.tychsen.enchantgui.Event.EventManager;
 import me.tychsen.enchantgui.Menu.DefaultMenuSystem;
 import me.tychsen.enchantgui.Menu.MenuSystem;
@@ -18,7 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener {
     private static Main instance;
 
     @Override
@@ -26,14 +27,15 @@ public class Main extends JavaPlugin {
         instance = this;
         getLogger().info("Loading configs and stuff...");
 
+        // Generate config.yml if there is none
+        saveDefaultConfig();
+
         // Register event manager
         EventManager manager = new EventManager(new DefaultMenuSystem());
         getServer().getPluginManager().registerEvents(manager, this);
 
         // Register command executor
         getCommand("eshop").setExecutor(manager);
-        // Generate config.yml if there is none
-        saveDefaultConfig();
 
         // Enable Metrics
         try {
