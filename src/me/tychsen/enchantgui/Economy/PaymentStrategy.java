@@ -4,5 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public interface PaymentStrategy {
-    boolean purchaseEnchant(Player p, ItemStack item);
+    boolean withdraw(Player p, int amount);
+    boolean hasSufficientFunds(Player p, int amount);
 }
