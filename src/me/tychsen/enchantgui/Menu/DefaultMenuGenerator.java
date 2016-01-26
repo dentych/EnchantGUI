@@ -1,7 +1,7 @@
 package me.tychsen.enchantgui.Menu;
 
 import me.tychsen.enchantgui.Config.EshopConfig;
-import me.tychsen.enchantgui.EshopEnchants;
+import me.tychsen.enchantgui.Config.EshopEnchants;
 import me.tychsen.enchantgui.Permissions.EshopPermissionSys;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

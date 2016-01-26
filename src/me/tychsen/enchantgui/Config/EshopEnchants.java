@@ -1,4 +1,4 @@
-package me.tychsen.enchantgui;
+package me.tychsen.enchantgui.Config;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
