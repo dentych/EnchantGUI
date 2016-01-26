@@ -3,6 +3,7 @@ package me.tychsen.enchantgui.Config;
 import me.tychsen.enchantgui.Economy.MoneyPayment;
 import me.tychsen.enchantgui.Economy.NullPayment;
 import me.tychsen.enchantgui.Economy.PaymentStrategy;
+import me.tychsen.enchantgui.Economy.XPPayment;
 import me.tychsen.enchantgui.Menu.DefaultMenuSystem;
 import me.tychsen.enchantgui.Main;
 import org.bukkit.command.CommandSender;
@@ -73,8 +74,7 @@ public class EshopConfig {
                     economy = new MoneyPayment();
                     break;
                 case "xp":
-                    // TODO: Implement XP payment.
-                    economy = new NullPayment();
+                    economy = new XPPayment();
                     break;
                 default:
                     economy = new NullPayment();

@@ -78,7 +78,7 @@ public class DefaultMenuGenerator implements MenuGenerator {
                 lores.add(ChatColor.GOLD + "Level: " + level);
                 if (!(config.getEconomy() instanceof NullPayment)) {
                     int price = config.getPrice(ench, level);
-                    lores.add(ChatColor.GREEN + "Price: $" + price);
+                    lores.add(ChatColor.GREEN + "Price: " + price);
                 }
                 meta.setLore(lores);
                 tmp.setItemMeta(meta);
