@@ -18,19 +18,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 
-public class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin {
     private static Main instance;
-    private MenuSystem system;
 
     @Override
     public void onEnable() {
         instance = this;
         getLogger().info("Loading configs and stuff...");
 
-        system = new DefaultMenuSystem();
-        EventManager manager = new EventManager(system);
+        // Register event manager
+        EventManager manager = new EventManager(new DefaultMenuSystem());
         getServer().getPluginManager().registerEvents(manager, this);
 
+        // Register command executor
+        getCommand("eshop").setExecutor(manager);
         // Generate config.yml if there is none
         saveDefaultConfig();
 
@@ -45,37 +46,5 @@ public class Main extends JavaPlugin implements Listener {
 
     public static Main getInstance() {
         return instance;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("eshop")) {
-            // TODO: Move to own class..
-            handleCommand(sender, command, args);
-        }
-
-        return true;
-    }
-
-    private boolean handleCommand(CommandSender sender, Command cmd, String[] args) {
-        Player p = null;
-
-        if (sender instanceof Player) {
-            p = (Player) sender;
-            if (args.length > 0) {
-                if (args[0].equalsIgnoreCase("reload")) {
-                    EshopConfig.getInstance().reloadConfig(sender);
-                }
-            } else {
-//TODO: Implement this check somewhere.. Dnu where
-//if (playerHasUsePerms(p)) {
-                system.showMainMenu(p);
-//} else {
-                p.sendMessage(ChatColor.DARK_RED + "[EnchantGUI] " + ChatColor.RED + "Sorry, you do not have access to this command");
-//}
-            }
-        }
-
-        return true;
     }
 }

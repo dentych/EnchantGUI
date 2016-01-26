@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,20 +18,21 @@ import java.util.*;
 public class DefaultMenuSystem implements MenuSystem {
     public static String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
 
-    private Map<String, Integer> playerNavigation;
+    private Map<String, Inventory> playerMenu;
     private int inventorySize;
 
     private EshopEnchants enchants;
     private EshopPermissionSys permsys;
     private EshopConfig config;
     private EshopVault vault;
+    private MenuGenerator generator;
 
     public DefaultMenuSystem() {
-        playerNavigation = new HashMap<>();
+        playerMenu = new HashMap<>();
         inventorySize = 36;
-        enchants = new EshopEnchants();
         permsys = new EshopPermissionSys();
         config = new EshopConfig();
+        generator = new DefaultMenuGenerator(36, config, permsys);
 
         if (!config.economyDisabled()) {
             vault = new EshopVault();
@@ -39,16 +41,35 @@ public class DefaultMenuSystem implements MenuSystem {
 
     @Override
     public void showMainMenu(Player p) {
-        playerNavigation.put(p.getName(), 0);
+        if (permsys.hasUsePermission(p)) {
+            Inventory inv = generator.mainMenu(p);
 
-        Inventory inv = p.getServer().createInventory(p, inventorySize, config.getMenuName());
-        generateMainMenu(p, inv);
-        p.openInventory(inv);
+            p.openInventory(inv);
+        } else {
+            p.sendMessage(ChatColor.DARK_RED + "[EnchantGUI] " + ChatColor.RED + "Sorry, you do not have " +
+                    "permission for this.");
+        }
     }
 
     @Override
+    public void handleMenuClick(Player p, InventoryClickEvent event) {
+        if (playerMenu.containsKey(p.getName())) {
+            if (event.getCurrentItem().getType() == Material.EMERALD) {
+                playerMenu.remove(p.getName());
+                showMainMenu(p);
+            } else if (event.getCurrentItem().getType() != Material.AIR){
+                // TODO: Sell enchant to player.
+                p.sendMessage("Yay, you bai enchant. Slot: " + event.getSlot());
+            }
+        } else {
+            Inventory inv = generator.enchantMenu(p, event.getCurrentItem());
+            playerMenu.put(p.getName(), inv);
+            p.openInventory(inv);
+        }
+    }
+
     public void showEnchantPage(Player p, ItemStack item) {
-        playerNavigation.put(p.getName(), 1);
+        //playerNavigation.put(p.getName(), 1);
 
         Inventory inv = p.getServer().createInventory(p, inventorySize,
                 config.getMenuName());
@@ -57,21 +78,20 @@ public class DefaultMenuSystem implements MenuSystem {
         p.openInventory(inv);
     }
 
-    @Override
     public int getPlayerMenuLevel(Player p) {
-        if (playerNavigation.containsKey(p.getName())) {
-            return playerNavigation.get(p.getName());
+        if (playerMenu.containsKey(p.getName())) {
+            //return playerMenu.get(p.getName());
         } else {
             throw new NoSuchElementException("Player is missing from navigation list.");
         }
+        return 0;
     }
 
-    @Override
     public void purchaseEnchant(Player p, ItemStack item, int slot) {
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();
         String[] enchantLevels = config.getEnchantLevels(ench);
-        int level = Integer.parseInt(enchantLevels[slot-1].substring(5));
+        int level = Integer.parseInt(enchantLevels[slot - 1].substring(5));
         int price = config.getPrice(ench, level);
 
         // DEBUG
@@ -88,12 +108,10 @@ public class DefaultMenuSystem implements MenuSystem {
                 enchantItem(playerHand, ench, level);
                 p.sendMessage(start + "Your item was enchanted with " + ChatColor.LIGHT_PURPLE + item.getItemMeta().getDisplayName() + " " + level);
                 p.closeInventory();
-            }
-            else {
+            } else {
                 p.sendMessage(start + "Insufficient funds.");
             }
-        }
-        else {
+        } else {
             p.sendMessage(start + "Enchant can't be applied to the item in your hand...");
         }
     }
@@ -102,24 +120,10 @@ public class DefaultMenuSystem implements MenuSystem {
         if (level > ench.getMaxLevel()) {
             // Unsafe enchant
             playerHand.addUnsafeEnchantment(ench, level);
-        }
-        else {
+        } else {
             // Safe, regular enchant
             playerHand.addEnchantment(ench, level);
         }
-    }
-
-    private void generateMainMenu(Player p, Inventory inv) {
-        List<ItemStack> enchList = enchants.getEnchantList();
-        List<ItemStack> itemlist = new ArrayList<>();
-
-        for (ItemStack item : enchList) {
-            if (permsys.hasEnchantPermission(p, item)) {
-                itemlist.add(item);
-            }
-        }
-
-        inv.setContents(itemlist.toArray(new ItemStack[itemlist.size()]));
     }
 
     private void generateEnchantPage(Player p, Inventory inv, ItemStack item) {

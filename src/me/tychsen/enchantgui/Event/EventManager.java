@@ -3,7 +3,12 @@ package me.tychsen.enchantgui.Event;
 import me.tychsen.enchantgui.Config.EshopConfig;
 import me.tychsen.enchantgui.Menu.MenuSystem;
 import me.tychsen.enchantgui.Main;
+import me.tychsen.enchantgui.Permissions.EshopPermissionSys;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class EventManager implements Listener {
+public class EventManager implements Listener, CommandExecutor {
     private MenuSystem system;
 
     public EventManager(MenuSystem system) {
@@ -26,8 +31,8 @@ public class EventManager implements Listener {
         try {
             handleInventoryClickEvent(e);
         } catch (Exception exc) {
-            // Todo: Fix this shit
-            Main.getInstance().getLogger().severe("EXCEPTION: " + exc.getMessage());
+            // TODO: Fix this shit with main getinstance.. it's ugly.
+            Main.getInstance().getLogger().severe("EXCEPTION: " + exc.getMessage() + "\n" + exc.getStackTrace()[0].toString() + "\n\n");
         }
     }
 
@@ -46,10 +51,13 @@ public class EventManager implements Listener {
         if (correctEvent && e.getWhoClicked() instanceof Player) {
             e.setCancelled(true); // Cancel whatever default action might occur
             p = (Player) e.getWhoClicked();
+
+            system.handleMenuClick(p, e);
         } else {
             return;
         }
 
+        /*
         switch (system.getPlayerMenuLevel(p)) {
             case 0:
                 system.showEnchantPage(p, e.getCurrentItem());
@@ -60,6 +68,7 @@ public class EventManager implements Listener {
             default:
                 throw new IndexOutOfBoundsException();
         }
+        */
     }
 
     private void handlePlayerInteractEvent(PlayerInteractEvent e) {
@@ -77,9 +86,33 @@ public class EventManager implements Listener {
                 break;
             default:
                 if (item.getType() != Material.AIR) {
-                    system.purchaseEnchant(p, item, slot + 1);
+                    // TODO: Fix
+                    //system.purchaseEnchant(p, item, slot + 1);
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if (command.getName().equalsIgnoreCase("eshop") && sender instanceof Player) {
+            handleCommand(sender, command, args);
+        }
+
+        return true;
+    }
+
+    private boolean handleCommand(CommandSender sender, Command cmd, String[] args) {
+        Player p = (Player) sender;
+
+        if (args.length > 0) {
+            if (args[0].equalsIgnoreCase("reload")) {
+                EshopConfig.getInstance().reloadConfig(sender);
+            }
+        } else {
+            system.showMainMenu(p);
+        }
+
+        return true;
     }
 }

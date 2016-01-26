@@ -1,6 +1,7 @@
 package me.tychsen.enchantgui.Menu;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -9,9 +10,5 @@ import org.bukkit.inventory.ItemStack;
 public interface MenuSystem {
     void showMainMenu(Player p);
 
-    void showEnchantPage(Player p, ItemStack item);
-
-    int getPlayerMenuLevel(Player p);
-
-    void purchaseEnchant(Player p, ItemStack item, int slot);
+    void handleMenuClick(Player p, InventoryClickEvent event);
 }

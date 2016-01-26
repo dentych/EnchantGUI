@@ -1,6 +1,7 @@
 package me.tychsen.enchantgui.Permissions;
 
 import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -9,7 +10,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.Map;
 
 public class EshopPermissionSys {
-
     public boolean hasEnchantPermission(Player p, ItemStack item) {
         if (p.isOp()) return true;
 
@@ -36,6 +36,19 @@ public class EshopPermissionSys {
 
         if (p.hasPermission(perm) || p.hasPermission(base + enchName + ".all") || p.hasPermission(base + "all"))
             return true;
+
+        return false;
+    }
+
+    public boolean hasUsePermission(Player p) {
+        if (p.isOp()) return true;
+
+        String base = "eshop.";
+        String perm = base + "use";
+
+        if (p.hasPermission(perm)) {
+            return true;
+        }
 
         return false;
     }
