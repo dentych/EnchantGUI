@@ -14,8 +14,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.logging.Logger;
 
 public class EventManager implements Listener, CommandExecutor {
     private MenuSystem system;
@@ -26,13 +29,29 @@ public class EventManager implements Listener, CommandExecutor {
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
-        if (e.getCurrentItem() == null ||  e.getCurrentItem().getType() == Material.AIR)
+        String inventoryName = e.getInventory().getName().toLowerCase();
+        String configInventoryName = EshopConfig.getInstance().getMenuName().toLowerCase();
+        boolean correctEvent = inventoryName.startsWith(configInventoryName);
+
+        if (!correctEvent) {
             return;
-        try {
-            handleInventoryClickEvent(e);
-        } catch (Exception exc) {
-            // TODO: Fix this shit with main getinstance.. it's ugly.
-            Main.getInstance().getLogger().severe("EXCEPTION: " + exc.getMessage() + "\n" + exc.getStackTrace()[0].toString() + "\n\n");
+        } else {
+            e.setCancelled(true);
+            if (!(e.getWhoClicked() instanceof Player)) return;
+            try {
+                handleInventoryClickEvent(e);
+            } catch (Exception ex) {
+                Logger logger = Main.getInstance().getLogger();
+                logger.severe("EXCEPTION: " + ex.getMessage());
+                for (StackTraceElement element : ex.getStackTrace()) {
+                    final String exceptionMsg =
+                            "Exception thrown from " + element.getMethodName() +
+                                    " in class " + element.getClassName() +
+                                    " [on line number " + element.getLineNumber() +
+                                    " of file " + element.getFileName() + "]";
+                    logger.severe(exceptionMsg);
+                }
+            }
         }
     }
 
@@ -48,17 +67,11 @@ public class EventManager implements Listener, CommandExecutor {
     }
 
     private void handleInventoryClickEvent(InventoryClickEvent e) {
-        boolean correctEvent = e.getInventory().getName().toLowerCase().startsWith(EshopConfig.getInstance().getMenuName().toLowerCase());
-        Player p;
+        if (e.getCurrentItem().getType() == Material.AIR) return;
+        if (e.getClickedInventory().getType() != InventoryType.CHEST) return;
 
-        if (correctEvent && e.getWhoClicked() instanceof Player) {
-            e.setCancelled(true); // Cancel whatever default action might occur
-            p = (Player) e.getWhoClicked();
-
-            system.handleMenuClick(p, e);
-        } else {
-            return;
-        }
+        Player p = (Player) e.getWhoClicked();
+        system.handleMenuClick(p, e);
     }
 
     private void handlePlayerInteractEvent(PlayerInteractEvent e) {
@@ -89,8 +102,7 @@ public class EventManager implements Listener, CommandExecutor {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 system.showMainMenu(p);
-            }
-            else {
+            } else {
                 sender.sendMessage("Can't use this command from console...");
             }
         }
