@@ -85,7 +85,7 @@ public class EventManager implements Listener, CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (command.getName().equalsIgnoreCase("eshop")) {
+        if (command.getName().equalsIgnoreCase("genchant")) {
             handleCommand(sender, command, args);
         }
 

@@ -6,6 +6,6 @@ author: Dentych
 dependency: Vault
 
 commands:
-    eshop:
+    genchant:
         description: Command for the EnchantGUI plugin
-        usage: Simply just /eshop
+        usage: Simply just /genchant

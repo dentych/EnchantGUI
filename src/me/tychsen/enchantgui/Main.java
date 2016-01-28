@@ -35,7 +35,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(manager, this);
 
         // Register command executor
-        getCommand("eshop").setExecutor(manager);
+        getCommand("genchant").setExecutor(manager);
 
         // Enable Metrics
         try {
