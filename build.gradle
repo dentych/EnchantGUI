@@ -19,12 +19,3 @@ dependencies {
     compile "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
     compile "net.milkbowl.vault:VaultAPI:1.5"
 }
-
-task myJar(type: Jar)
-
-artifacts {
-    archives {
-        name "EnchantGUI"
-        type "Jar"
-    }
-}
