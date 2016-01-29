@@ -2,3 +2,5 @@ src/META-INF/
 out/
 EnchantGUI.iml
 .idea/
+.gradle/
+build/
