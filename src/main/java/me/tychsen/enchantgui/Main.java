@@ -1,20 +1,8 @@
 package me.tychsen.enchantgui;
 
-import me.tychsen.enchantgui.Config.EshopConfig;
-import me.tychsen.enchantgui.Economy.PaymentStrategy;
 import me.tychsen.enchantgui.Event.EventManager;
 import me.tychsen.enchantgui.Menu.DefaultMenuSystem;
-import me.tychsen.enchantgui.Menu.MenuSystem;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;

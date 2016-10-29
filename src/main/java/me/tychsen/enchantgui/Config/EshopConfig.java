@@ -4,6 +4,7 @@ import me.tychsen.enchantgui.Economy.MoneyPayment;
 import me.tychsen.enchantgui.Economy.NullPayment;
 import me.tychsen.enchantgui.Economy.PaymentStrategy;
 import me.tychsen.enchantgui.Economy.XPPayment;
+import me.tychsen.enchantgui.Localization.LocalizationManager;
 import me.tychsen.enchantgui.Menu.DefaultMenuSystem;
 import me.tychsen.enchantgui.Main;
 import org.bukkit.command.CommandSender;
@@ -43,13 +44,14 @@ public class EshopConfig {
     }
 
     public void reloadConfig(CommandSender sender) {
+        LocalizationManager lm = LocalizationManager.getInstance();
         if (sender.isOp() || sender.hasPermission("eshop.admin")) {
             plugin.reloadConfig();
             config = plugin.getConfig();
             economy = null;
-            sender.sendMessage(DefaultMenuSystem.start + "Configuration file has been reloaded!");
+            sender.sendMessage(DefaultMenuSystem.start + lm.getString("config-reloaded"));
         } else {
-            sender.sendMessage(DefaultMenuSystem.start + "Sorry, you do not have access to this command");
+            sender.sendMessage(DefaultMenuSystem.start + lm.getString("no-permission"));
         }
     }
 

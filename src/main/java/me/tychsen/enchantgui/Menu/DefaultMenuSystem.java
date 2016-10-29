@@ -3,6 +3,7 @@ package me.tychsen.enchantgui.Menu;
 import me.tychsen.enchantgui.Config.EshopConfig;
 import me.tychsen.enchantgui.Config.EshopEnchants;
 import me.tychsen.enchantgui.Economy.PaymentStrategy;
+import me.tychsen.enchantgui.Localization.LocalizationManager;
 import me.tychsen.enchantgui.Permissions.EshopPermissionSys;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultMenuSystem implements MenuSystem {
-    public static String start = ChatColor.AQUA + "[EnchantGUI] " + ChatColor.WHITE;
+    public static String start =
+            ChatColor.AQUA + LocalizationManager.getInstance().getString("prefix") + " " + ChatColor.WHITE;
 
     private Map<String, String[]> playerLevels;
     private int inventorySize;
@@ -36,14 +38,15 @@ public class DefaultMenuSystem implements MenuSystem {
 
     @Override
     public void showMainMenu(Player p) {
+        LocalizationManager lm = LocalizationManager.getInstance();
         if (playerLevels.containsKey(p.getName())) playerLevels.remove(p.getName());
         if (permsys.hasUsePermission(p)) {
             Inventory inv = generator.mainMenu(p);
 
             p.openInventory(inv);
         } else {
-            p.sendMessage(ChatColor.DARK_RED + "[EnchantGUI] " + ChatColor.RED + "Sorry, you do not have " +
-                    "permission for this.");
+            p.sendMessage(ChatColor.DARK_RED + lm.getString("prefix") + " " +
+                    ChatColor.RED + lm.getString("no-permission"));
         }
     }
 
@@ -67,6 +70,7 @@ public class DefaultMenuSystem implements MenuSystem {
     }
 
     private void purchaseEnchant(Player p, InventoryClickEvent event) {
+        LocalizationManager lm = LocalizationManager.getInstance();
         ItemStack item = event.getCurrentItem();
         Enchantment ench = item.getEnchantments().keySet().toArray(new Enchantment[1])[0];
         ItemStack playerHand = p.getItemInHand();
@@ -78,7 +82,7 @@ public class DefaultMenuSystem implements MenuSystem {
         //p.sendMessage("Slot: " + slot + ". Level: " + level);
 
         if (playerHand == null || playerHand.getType() == Material.AIR) {
-            p.sendMessage(start + "You can't enchant that!");
+            p.sendMessage(start + lm.getString("cant-enchant"));
             p.closeInventory();
             return;
         }
@@ -88,13 +92,14 @@ public class DefaultMenuSystem implements MenuSystem {
 
             if (payment.withdraw(p, price)) {
                 enchantItem(playerHand, ench, level);
-                p.sendMessage(start + "Your item was enchanted with " + ChatColor.LIGHT_PURPLE + item.getItemMeta().getDisplayName() + " " + level);
+                p.sendMessage(start + lm.getString("item-enchanted") + " " + ChatColor.LIGHT_PURPLE +
+                        item.getItemMeta().getDisplayName() + " " + level);
                 p.closeInventory();
             } else {
-                p.sendMessage(start + "Insufficient funds.");
+                p.sendMessage(start + lm.getString("insufficient-funds"));
             }
         } else {
-            p.sendMessage(start + "Enchant can't be applied to the item in your hand...");
+            p.sendMessage(start + lm.getString("item-cant-be-enchanted"));
         }
     }
 

@@ -1,11 +1,8 @@
 package me.tychsen.enchantgui.Permissions;
 
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
-import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
 
