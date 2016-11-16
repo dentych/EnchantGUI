@@ -23,7 +23,7 @@ public class LocalizationManager {
     }
 
     public String getString(String key) {
-        return getConfig().getString(key);
+        return ChatColor.translateAlternateColorCodes('&', getConfig().getString(key));
     }
 
     public void reload(CommandSender sender) {

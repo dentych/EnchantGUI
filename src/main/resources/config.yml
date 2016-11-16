@@ -121,3 +121,8 @@ thorns:
     level3: 300
 water_worker:
     level1: 100
+frost_walker:
+    level1: 100
+    level2: 200
+mending:
+    level1: 100

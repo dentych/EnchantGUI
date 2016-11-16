@@ -1,5 +1,5 @@
 group 'Tychsen.me'
-version '1.4'
+version '1.4.1'
 
 apply plugin: 'java'
 
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
+    compile "org.spigotmc:spigot-api:1.10.2-R0.1-SNAPSHOT"
     compile "net.milkbowl.vault:VaultAPI:1.5"
 }
 

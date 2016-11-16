@@ -51,6 +51,8 @@ public class EshopEnchants {
         addItem(Enchantment.SILK_TOUCH, Material.DIAMOND_PICKAXE, lm.getString("enchant.silk_touch"));
         addItem(Enchantment.THORNS, Material.DIAMOND_CHESTPLATE, lm.getString("enchant.thorns"));
         addItem(Enchantment.WATER_WORKER, Material.DIAMOND_HELMET, lm.getString("enchant.aqua_affinity"));
+        addItem(Enchantment.FROST_WALKER, Material.DIAMOND_BOOTS, lm.getString("enchant.frost_walker"));
+        addItem(Enchantment.MENDING, Material.DIAMOND_PICKAXE, lm.getString("enchant.mending"));
     }
 
     /**
